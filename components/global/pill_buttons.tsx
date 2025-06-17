@@ -16,7 +16,7 @@ const PillButton: React.FC<PillButtonProps> = ({
   disabled = false,
 }) => {
   const baseStyles =
-    "px-4 py-2 rounded-full font-semibold transition-all duration-200 text-sm me-[15px]";
+    "px-4 py-2 rounded-full font-semibold transition-all duration-200 text-sm me-[15px] text-[12px]";
 
   const variantStyles = {
     default: `${
