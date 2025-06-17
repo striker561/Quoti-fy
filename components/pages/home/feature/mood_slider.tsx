@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { StaticImageData } from "next/image";
-import Sad from "../../../../public/emoji/low.png";
-import Mid from "../../../../public/emoji/mid.png";
-import Happy from "../../../../public/emoji/high.png";
+import Sad from "../../../../public/images//emoji/low.png";
+import Mid from "../../../../public/images/emoji/mid.png";
+import Happy from "../../../../public/images/emoji/high.png";
 import EmojiCons from "@/components/global/emoji_cons";
 
 interface MoodEmoji {

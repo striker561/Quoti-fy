@@ -1,6 +1,6 @@
 import Image from "next/image";
-import HomeIcon from "../../../public/icons/Menu.png";
-import ProfileIcon from "../../../public/icons/Profile.png";
+import HomeIcon from "../../../public/images/icons/Menu.png";
+import ProfileIcon from "../../../public/images/icons/Profile.png";
 
 export default function HomeNavBar() {
   return (
