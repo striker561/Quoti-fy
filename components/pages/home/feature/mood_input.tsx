@@ -14,7 +14,7 @@ const DefaultMoods = [
 
 export default function MoodInput() {
   return (
-    <div className="p-3 bg-[#A6B1E1] rounded-[20px]">
+    <div className="p-3 bg-[#A6B1E1] rounded-[20px] border-2 border-solid border-indigo-700">
       <input
         type="text"
         placeholder="One Word...."
