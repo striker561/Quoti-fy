@@ -21,8 +21,8 @@ const PillButton: React.FC<PillButtonProps> = ({
   const variantStyles = {
     default: `${
       isSelected
-        ? "bg-grey-100 text-gray-800 hover:bg-[#CACFD6]/60"
-        : "bg-[#CACFD6]/60 text-gray-600 hover:bg-gray-100"
+        ? "bg-grey-100 text-gray-800 hover:bg-[#CACFD6]"
+        : "bg-[#fff] text-gray-600 hover:bg-gray-100"
     }`,
     primary: `${
       isSelected
@@ -31,8 +31,8 @@ const PillButton: React.FC<PillButtonProps> = ({
     }`,
     secondary: `${
       isSelected
-        ? "bg-purple-600 text-white"
-        : "bg-purple-100 text-purple-600 hover:bg-purple-200"
+        ? "bg-[#6320EE] text-white hover:bg-[#0C090D]/60"
+        : "bg-[#0C090D] text-white hover:bg-[#6320EE]/60"
     }`,
   };
 
