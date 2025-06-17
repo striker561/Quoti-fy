@@ -1,6 +1,6 @@
+import FeatureFrame from "@/components/pages/home/feature_frame";
+import "@/styles/slider.css";
+
 export default function Home() {
-  return <div className="container">
-    <div className="mt-5">
-    </div>
-  </div>;
+  return <FeatureFrame />;
 }

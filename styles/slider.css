@@ -1,0 +1,39 @@
+.slider-container {
+  width: 100%;
+}
+
+.custom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 45px;
+  background: transparent;
+  border-radius: 20px;
+  position: relative;
+}
+
+.custom-slider::-webkit-slider-runnable-track {
+  height: 45px;
+  border-radius: 20px;
+}
+
+.custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.custom-slider::-moz-range-track {
+  height: 45px;
+  border-radius: 20px;
+}
+
+.custom-slider::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border: none;
+}
