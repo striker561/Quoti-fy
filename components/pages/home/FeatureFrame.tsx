@@ -1,9 +1,9 @@
-import WelcomeText from "./feature/welcome_text";
-import MoodInput from "./feature/mood_input";
-import MoodSlider from "./feature/mood_slider";
-import MoodImageStyle from "./feature/image_style";
-import MoodFilterSelect from "./feature/filter_select";
-import GenerateButton from "./feature/generate_btn";
+import WelcomeText from "./feature/WelcomeText";
+import MoodInput from "./feature/MoodInput";
+import MoodSlider from "./feature/MoodSlider";
+import MoodImageStyle from "./feature/ImageStyle";
+import MoodFilterSelect from "./feature/FilterSelect";
+import GenerateButton from "./feature/GenerateBtn";
 
 export default function FeatureFrame() {
   return (

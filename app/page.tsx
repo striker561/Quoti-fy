@@ -1,4 +1,4 @@
-import FeatureFrame from "@/components/pages/home/feature_frame";
+import FeatureFrame from "@/components/pages/home/FeatureFrame";
 import "@/styles/slider.css";
 
 export default function Home() {

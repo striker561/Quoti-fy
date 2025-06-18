@@ -1,4 +1,4 @@
-import PillButton from "@/components/global/pill_buttons";
+import PillButton from "@/components/global/PillButton";
 
 const DefaultMoods = [
   "Focused",

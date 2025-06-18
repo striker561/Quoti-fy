@@ -5,7 +5,7 @@ import Gradient from "../../../../public/images/img/gradient.avif";
 import Landscape from "../../../../public/images/img/landscape.avif";
 import Random from "../../../../public/images/img/random.png";
 import SciFi from "../../../../public/images/img/sci-fi.avif";
-import ImageRadio from "@/components/global/image_radio";
+import ImageRadio from "@/components/global/ImageRadio";
 
 interface ImageStyle {
   image: StaticImageData;

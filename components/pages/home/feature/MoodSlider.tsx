@@ -4,7 +4,7 @@ import { StaticImageData } from "next/image";
 import Sad from "../../../../public/images//emoji/low.png";
 import Mid from "../../../../public/images/emoji/mid.png";
 import Happy from "../../../../public/images/emoji/high.png";
-import EmojiCons from "@/components/global/emoji_cons";
+import EmojiCons from "@/components/global/EmojiCons";
 
 interface MoodEmoji {
   image: StaticImageData;
