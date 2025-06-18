@@ -1,7 +1,8 @@
+import "../styles/globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "../styles/globals.css";
 import HomeNavBar from "@/components/pages/home/NavBar";
+import { ThemeProvider } from "@/components/theme/provider";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -22,10 +23,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
-        <HomeNavBar />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <HomeNavBar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
