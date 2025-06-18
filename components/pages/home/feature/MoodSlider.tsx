@@ -27,13 +27,27 @@ const defaultMoodsEmoji: MoodEmoji[] = [
 ];
 
 export default function MoodSlider() {
-  const [sliderValue, setSliderValue] = useState(50);
+  const [sliderValue, setSliderValue] = useState<number>(0);
 
   useEffect(() => {
+    let isMounted = true;
     const slider = document.getElementById("progressRange") as HTMLInputElement;
     if (slider) {
-      updateSliderBackground(slider);
+      let current = 0;
+      const animateTo50 = () => {
+        if (!isMounted) return;
+        if (current < 50) {
+          current += 1;
+          setSliderValue(current);
+          updateSliderBackground(slider);
+          setTimeout(animateTo50, 5);
+        }
+      };
+      animateTo50();
     }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
