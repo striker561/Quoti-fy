@@ -16,7 +16,7 @@ const PillButton: React.FC<PillButtonProps> = ({
   disabled = false,
 }) => {
   const baseStyles =
-    "px-4 py-2 rounded-full font-semibold transition-all duration-200 text-sm me-[15px] text-[12px]";
+    "px-4 py-2 rounded-full font-semibold transition-all duration-200 text-sm text-[12px]";
 
   const variantStyles = {
     default: `${
@@ -31,8 +31,8 @@ const PillButton: React.FC<PillButtonProps> = ({
     }`,
     secondary: `${
       isSelected
-        ? "bg-[#6320EE] text-white hover:bg-[#0C090D]/60"
-        : "bg-[#0C090D] text-white hover:bg-[#6320EE]/60"
+        ? "bg-[#6320EE] text-white hover:bg-[#0C090D]"
+        : "bg-[#0C090D] text-white hover:bg-[#6320EE]"
     }`,
   };
 

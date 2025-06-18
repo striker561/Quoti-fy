@@ -38,7 +38,7 @@ const ImageRadio: React.FC<ImageRadioProps> = ({
                 duration-200
                 ${
                   selected
-                    ? "border-2 border-blue-500"
+                    ? "border-3 border-[#6320EE]"
                     : "border border-gray-300"
                 }
                 rounded-lg

@@ -1,11 +1,12 @@
 "use client";
+import { useState } from "react";
 import { StaticImageData } from "next/image";
+import ImageRadio from "@/components/global/ImageRadio";
+import Random from "../../../../public/images/img/random.png";
+import SciFi from "../../../../public/images/img/sci-fi.avif";
 import Building from "../../../../public/images/img/building.avif";
 import Gradient from "../../../../public/images/img/gradient.avif";
 import Landscape from "../../../../public/images/img/landscape.avif";
-import Random from "../../../../public/images/img/random.png";
-import SciFi from "../../../../public/images/img/sci-fi.avif";
-import ImageRadio from "@/components/global/ImageRadio";
 
 interface ImageStyle {
   image: StaticImageData;
@@ -36,6 +37,8 @@ const ImageStyles: ImageStyle[] = [
 ];
 
 export default function MoodImageStyle() {
+  const [imageStyle, setImageStyle] = useState<string>("Landscape");
+
   return (
     <div className="mt-[25px]">
       <h1 className="font-medium text-[25px]">Let&apos;s set it right ...</h1>
@@ -43,14 +46,15 @@ export default function MoodImageStyle() {
         {ImageStyles.map((style) => (
           <ImageRadio
             key={style.name}
-            id={style.name.toLowerCase()}
+            id={style.name.toLowerCase().replace(/\s+/g, "-")}
             name="imageStyle"
             value={style.name}
-            selected={false}
+            onSelect={() => setImageStyle(style.name)}
+            selected={imageStyle == style.name}
             imageUrl={style.image}
             label={style.name}
             size={200}
-            showOverlay={false}
+            showOverlay={imageStyle == style.name}
             imageFit={style.name == "Random" ? "none" : "cover"}
             textColor={style.name == "Random" ? "#6320EE" : "white"}
           />
