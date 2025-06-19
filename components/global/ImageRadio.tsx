@@ -47,14 +47,14 @@ const ImageRadio: React.FC<ImageRadioProps> = ({
             `}
       style={{ width: size * 1.3, height: size }}
     >
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full bg-white ">
         <Image
           src={imageUrl}
           alt={label}
           fill
           quality={30}
           priority={false}
-          className={`transition-transform duration-200 hover:scale-105 bg-white border-transparent`}
+          className={`transition-transform duration-200 hover:scale-105`}
           style={{ objectFit: imageFit }}
         />
         {showOverlay && <div className="absolute inset-0 bg-[#D9D9D9]/30 " />}

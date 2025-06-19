@@ -15,6 +15,10 @@ interface ImageStyle {
 
 const ImageStyles: ImageStyle[] = [
   {
+    image: Random,
+    name: "Random",
+  },
+  {
     image: Landscape,
     name: "Landscape",
   },
@@ -30,19 +34,15 @@ const ImageStyles: ImageStyle[] = [
     image: Gradient,
     name: "Gradient",
   },
-  {
-    image: Random,
-    name: "Random",
-  },
 ];
 
 export default function MoodImageStyle() {
-  const [imageStyle, setImageStyle] = useState<string>("Landscape");
+  const [imageStyle, setImageStyle] = useState<string>("Random");
 
   return (
     <div className="mt-[25px]">
       <h1 className="font-medium text-[25px]">Let&apos;s set it right ...</h1>
-      <div className="flex flex-wrap gap-7">
+      <div className="flex flex-wrap gap-2 lg:gap-5 justify-center sm:justify-start">
         {ImageStyles.map((style) => (
           <ImageRadio
             key={style.name}
@@ -53,7 +53,7 @@ export default function MoodImageStyle() {
             selected={imageStyle == style.name}
             imageUrl={style.image}
             label={style.name}
-            size={150}
+            size={135}
             showOverlay={imageStyle == style.name}
             imageFit={style.name == "Random" ? "none" : "cover"}
             textColor={style.name == "Random" ? "#6320EE" : "white"}

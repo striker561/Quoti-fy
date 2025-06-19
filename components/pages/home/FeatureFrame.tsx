@@ -7,8 +7,8 @@ import GenerateButton from "./feature/GenerateBtn";
 
 export default function FeatureFrame() {
   return (
-    <div className="mt-20 mb-50">
-      <div className="mr-[250px] ml-[250px]">
+    <div className="my-20 @container">
+      <div className="mx-4 md:mx-[15rem] lg:mx-[15rem]">
         <WelcomeText />
         <MoodInput />
         <MoodSlider />
