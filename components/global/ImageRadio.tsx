@@ -59,7 +59,10 @@ const ImageRadio: React.FC<ImageRadioProps> = ({
         />
         {showOverlay && <div className="absolute inset-0 bg-[#D9D9D9]/30 " />}
         <div className="absolute bottom-0 left-0 right-0 p-2">
-          <p className="text-center font-medium" style={{ color: textColor }}>
+          <p
+            className="text-center font-medium text-[14px]"
+            style={{ color: textColor }}
+          >
             {label}
           </p>
         </div>

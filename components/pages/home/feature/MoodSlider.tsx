@@ -66,7 +66,9 @@ export default function MoodSlider() {
 
   return (
     <div className="mt-[25px]">
-      <h1 className="font-medium text-[25px]">Adjust the vibe</h1>
+      <h2 className="font-medium text-[15px] lg:text-[20px]">
+        Adjust the vibe
+      </h2>
       <div className="mt-3">
         <div className="slider-container">
           <input

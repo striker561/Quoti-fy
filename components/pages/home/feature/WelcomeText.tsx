@@ -48,11 +48,11 @@ export default function WelcomeText() {
 
   const ordinal = getOrdinalSuffix(dayOfMonth);
 
-  const TimeText = `It's ${DaysList[dayOfWeek]} ${dayOfMonth}${ordinal} ${MonthList[monthOfYear]},`;
+  const TimeText = `It is ${DaysList[dayOfWeek]} ${dayOfMonth}${ordinal} ${MonthList[monthOfYear]},`;
 
   return (
     <div className="mb-5">
-      <h2 className="font-medium text-[30px] capitalize">
+      <h2 className="font-medium text-[20px] lg:text-[25px] capitalize">
         <TypewriterFadeIn text="Hi," delay={1} />
         <br />
         <TypewriterFadeIn text={TimeText} delay={3} />

@@ -41,7 +41,9 @@ export default function MoodImageStyle() {
 
   return (
     <div className="mt-[25px]">
-      <h1 className="font-medium text-[25px]">Let&apos;s set it right ...</h1>
+      <h2 className="font-medium text-[15px] lg:text-[20px]">
+        Let&apos;s set it right ...
+      </h2>
       <div className="flex flex-wrap gap-2 lg:gap-5 justify-center sm:justify-start">
         {ImageStyles.map((style) => (
           <ImageRadio
