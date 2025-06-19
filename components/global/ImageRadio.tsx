@@ -52,7 +52,9 @@ const ImageRadio: React.FC<ImageRadioProps> = ({
           src={imageUrl}
           alt={label}
           fill
-          className={`transition-transform duration-200 hover:scale-105`}
+          quality={30}
+          priority={false}
+          className={`transition-transform duration-200 hover:scale-105 bg-white border-transparent`}
           style={{ objectFit: imageFit }}
         />
         {showOverlay && <div className="absolute inset-0 bg-[#D9D9D9]/30 " />}

@@ -12,18 +12,20 @@ interface EmojiConsProps {
 const EmojiCons: React.FC<EmojiConsProps> = ({
   image,
   imageAlt,
-  height = 30,
-  width = 30,
+  height = 25,
+  width = 25,
 }) => {
   return (
     <div
-      className={`h-[${height}] w-[${width}] rounded-full bg-[#D9D9D9] drop-shadow-lg`}
+      className={`h-[${height}] w-[${width}] rounded-full bg-[#d9d9d9f5]/30 drop-shadow-lg`}
     >
       <Image
         src={image}
         alt={imageAlt}
-        width={width - 10}
-        height={height - 10}
+        width={width - 5}
+        height={height - 5}
+        quality={100}
+        priority={true}
         className="rounded-full"
       />
     </div>

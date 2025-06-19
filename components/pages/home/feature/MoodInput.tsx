@@ -36,7 +36,7 @@ export default function MoodInput() {
   };
 
   return (
-    <div className="p-3 bg-[#A6B1E1] rounded-[20px] border-2 border-solid border-indigo-700">
+    <div className="p-3 bg-[#A6B1E1]/30 rounded-[20px] border-2 border-solid border-indigo-700">
       <input
         type="text"
         value={moodText}
@@ -47,7 +47,7 @@ export default function MoodInput() {
         onKeyDown={handleKeyDown}
         placeholder="One Word...."
         aria-label="Enter your current mood"
-        className="outline-none w-full h-[86px] text-[35px] placeholder:text-[#CACFD6] bg-transparent"
+        className="outline-none w-full h-[86px] text-[35px] placeholder:text-[#a5adb9] bg-transparent"
       />
       <hr className="w-full h-[5px]" />
       <div className="mt-3 flex overflow-auto scrollbar-hide gap-2 py-1">

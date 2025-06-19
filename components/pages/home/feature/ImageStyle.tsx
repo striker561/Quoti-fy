@@ -53,7 +53,7 @@ export default function MoodImageStyle() {
             selected={imageStyle == style.name}
             imageUrl={style.image}
             label={style.name}
-            size={200}
+            size={150}
             showOverlay={imageStyle == style.name}
             imageFit={style.name == "Random" ? "none" : "cover"}
             textColor={style.name == "Random" ? "#6320EE" : "white"}
