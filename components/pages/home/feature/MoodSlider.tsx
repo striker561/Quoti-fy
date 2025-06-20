@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { StaticImageData } from "next/image";
+import { DEFAULT_MOOD_RANGE } from "@/lib/constants";
 import EmojiCons from "@/components/global/EmojiCons";
 import Sad from "../../../../public/images/emoji/low.png";
 import Mid from "../../../../public/images/emoji/mid.png";
@@ -40,7 +41,7 @@ export default function MoodSlider({ onSliderChange }: MoodSliderProps) {
       let current = 0;
       const animateTo50 = () => {
         if (!isMounted) return;
-        if (current < 50) {
+        if (current < DEFAULT_MOOD_RANGE) {
           current += 1;
           setSliderValue(current);
           updateSliderBackground(slider);

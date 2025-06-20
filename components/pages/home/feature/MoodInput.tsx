@@ -1,22 +1,12 @@
 "use client";
 import { useState } from "react";
 import PillButton from "@/components/global/PillButton";
+import { DefaultMoods } from "@/lib/constants";
 
 type MoodInputProps = {
   onMoodChange: (mood: string) => void;
 };
 
-const DefaultMoods = [
-  "Focused",
-  "Determined",
-  "Loved",
-  "Cheerful",
-  "Funny",
-  "Motivated",
-  "Energetic",
-  "Happy",
-  "Romantic",
-];
 
 export default function MoodInput({ onMoodChange }: MoodInputProps) {
   const [moodText, setMoodText] = useState<string>("");

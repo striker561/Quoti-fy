@@ -1,11 +1,12 @@
 "use client";
+import { useState } from "react";
 import WelcomeText from "./feature/WelcomeText";
 import MoodInput from "./feature/MoodInput";
 import MoodSlider from "./feature/MoodSlider";
 import MoodImageStyle from "./feature/ImageStyle";
 import MoodFilterSelect from "./feature/FilterSelect";
 import GenerateButton from "./feature/GenerateBtn";
-import { useState } from "react";
+import { DEFAULT_MOOD_RANGE } from "@/lib/constants";
 
 type FeatureState = {
   mood: string;
@@ -17,7 +18,7 @@ type FeatureState = {
 export default function FeatureFrame() {
   const [formState, setFormState] = useState<FeatureState>({
     mood: "",
-    moodRange: 50,
+    moodRange: DEFAULT_MOOD_RANGE,
     moodImageStyle: "",
     moodFilter: "",
   });

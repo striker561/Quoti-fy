@@ -1,29 +1,5 @@
 import TypewriterFadeIn from "@/components/global/TypeWritterEffect";
-
-const DaysList: string[] = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-const MonthList: string[] = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import { DaysList, MonthList } from "@/lib/constants";
 
 function getOrdinalSuffix(n: number): string {
   if (n >= 11 && n <= 13) return "th";

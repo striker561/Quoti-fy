@@ -1,12 +1,11 @@
 "use client";
 import { useState } from "react";
+import { DefaultFilters } from "@/lib/constants";
 import PillButton from "@/components/global/PillButton";
 
 type MoodFilerSelectProp = {
   onFilterChange: (filter: string) => void;
 };
-
-const DefaultFilters = ["Original", "Nostalgic", "Old", "Pop"];
 
 export default function MoodFilterSelect({
   onFilterChange,
