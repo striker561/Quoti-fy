@@ -11,6 +11,10 @@ interface MoodEmoji {
   Alt: string;
 }
 
+type MoodSliderProps = {
+  onSliderChange: (moodRange: number) => void;
+};
+
 const defaultMoodsEmoji: MoodEmoji[] = [
   {
     image: Sad,
@@ -26,7 +30,7 @@ const defaultMoodsEmoji: MoodEmoji[] = [
   },
 ];
 
-export default function MoodSlider() {
+export default function MoodSlider({ onSliderChange }: MoodSliderProps) {
   const [sliderValue, setSliderValue] = useState<number>(0);
 
   useEffect(() => {
@@ -53,6 +57,7 @@ export default function MoodSlider() {
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateSliderBackground(event.target);
     setSliderValue(Number(event.target.value));
+    onSliderChange(Number(event.target.value));
   };
 
   function updateSliderBackground(slider: HTMLInputElement) {

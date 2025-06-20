@@ -1,20 +1,56 @@
+"use client";
 import WelcomeText from "./feature/WelcomeText";
 import MoodInput from "./feature/MoodInput";
 import MoodSlider from "./feature/MoodSlider";
 import MoodImageStyle from "./feature/ImageStyle";
 import MoodFilterSelect from "./feature/FilterSelect";
 import GenerateButton from "./feature/GenerateBtn";
+import { useState } from "react";
+
+type FeatureState = {
+  mood: string;
+  moodRange: number;
+  moodImageStyle: string;
+  moodFilter: string;
+};
 
 export default function FeatureFrame() {
+  const [formState, setFormState] = useState<FeatureState>({
+    mood: "",
+    moodRange: 50,
+    moodImageStyle: "",
+    moodFilter: "",
+  });
+
+  const isComplete =
+    formState.mood.trim() !== "" &&
+    formState.moodRange > 0 &&
+    formState.moodImageStyle.trim() !== "" &&
+    formState.moodFilter.trim() !== "";
+
   return (
     <div className="my-20 @container">
       <div className="mx-4 md:mx-[15rem] lg:mx-[15rem]">
         <WelcomeText />
-        <MoodInput />
-        <MoodSlider />
-        <MoodImageStyle />
-        <MoodFilterSelect />
-        <GenerateButton />
+        <MoodInput
+          onMoodChange={(mood) => setFormState((s) => ({ ...s, mood }))}
+        />
+        <MoodSlider
+          onSliderChange={(moodRange) =>
+            setFormState((s) => ({ ...s, moodRange }))
+          }
+        />
+        <MoodImageStyle
+          onImageStyleChange={(moodImageStyle) =>
+            setFormState((s) => ({ ...s, moodImageStyle }))
+          }
+        />
+        <MoodFilterSelect
+          onFilterChange={(moodFilter) =>
+            setFormState((s) => ({ ...s, moodFilter }))
+          }
+        />
+        <GenerateButton isActive={isComplete} />
       </div>
     </div>
   );

@@ -13,6 +13,10 @@ interface ImageStyle {
   name: string;
 }
 
+type MoodImageStyleProp = {
+  onImageStyleChange: (mood: string) => void;
+};
+
 const ImageStyles: ImageStyle[] = [
   {
     image: Random,
@@ -36,8 +40,10 @@ const ImageStyles: ImageStyle[] = [
   },
 ];
 
-export default function MoodImageStyle() {
-  const [imageStyle, setImageStyle] = useState<string>("Random");
+export default function MoodImageStyle({
+  onImageStyleChange,
+}: MoodImageStyleProp) {
+  const [imageStyle, setImageStyle] = useState<string>("");
 
   return (
     <div className="mt-[25px]">
@@ -51,7 +57,10 @@ export default function MoodImageStyle() {
             id={style.name.toLowerCase().replace(/\s+/g, "-")}
             name="imageStyle"
             value={style.name}
-            onSelect={() => setImageStyle(style.name)}
+            onSelect={() => {
+              setImageStyle(style.name);
+              onImageStyleChange(style.name);
+            }}
             selected={imageStyle == style.name}
             imageUrl={style.image}
             label={style.name}

@@ -2,13 +2,22 @@
 import { useState } from "react";
 import PillButton from "@/components/global/PillButton";
 
+type MoodFilerSelectProp = {
+  onFilterChange: (filter: string) => void;
+};
+
 const DefaultFilters = ["Original", "Nostalgic", "Old", "Pop"];
 
-export default function MoodFilterSelect() {
-  const [moodFilter, setMoodFilter] = useState<string>("Original");
+export default function MoodFilterSelect({
+  onFilterChange,
+}: MoodFilerSelectProp) {
+  const [moodFilter, setMoodFilter] = useState<string>("");
+
   return (
     <div className="mt-[25px]">
-      <h2 className="font-medium text-[15px] lg:text-[20px]">Finally the filter !</h2>
+      <h2 className="font-medium text-[15px] lg:text-[20px]">
+        Finally the filter !
+      </h2>
       <div className="mt-3 flex overflow-auto scrollbar-hide gap-5 py-1">
         {DefaultFilters.map((mood) => (
           <PillButton
@@ -18,6 +27,7 @@ export default function MoodFilterSelect() {
             isSelected={mood == moodFilter}
             onClick={() => {
               setMoodFilter(mood);
+              onFilterChange(mood);
             }}
           />
         ))}

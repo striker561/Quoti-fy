@@ -2,6 +2,10 @@
 import { useState } from "react";
 import PillButton from "@/components/global/PillButton";
 
+type MoodInputProps = {
+  onMoodChange: (mood: string) => void;
+};
+
 const DefaultMoods = [
   "Focused",
   "Determined",
@@ -14,11 +18,12 @@ const DefaultMoods = [
   "Romantic",
 ];
 
-export default function MoodInput() {
+export default function MoodInput({ onMoodChange }: MoodInputProps) {
   const [moodText, setMoodText] = useState<string>("");
 
   const handlePillClick = (mood: string): void => {
     setMoodText(mood);
+    onMoodChange(mood);
   };
 
   const handleOnBlur = (): void => {
@@ -35,14 +40,18 @@ export default function MoodInput() {
     }
   };
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const mood = e.target.value;
+    setMoodText(mood);
+    onMoodChange(mood);
+  };
+
   return (
     <div className="p-3 bg-[#A6B1E1]/30 rounded-[20px] border-2 border-solid border-indigo-700">
       <input
         type="text"
         value={moodText}
-        onChange={(e) => {
-          setMoodText(e.target.value);
-        }}
+        onChange={handleOnChange}
         onBlur={handleOnBlur}
         onKeyDown={handleKeyDown}
         placeholder="One Word...."
