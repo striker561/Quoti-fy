@@ -67,7 +67,7 @@ export default function MoodSlider({ onSliderChange }: MoodSliderProps) {
         (parseInt(slider.max) - parseInt(slider.min))) *
       100;
 
-    slider.style.background = `linear-gradient(to right, #5e00ff ${val}%, #cfd2d6 ${val}%)`;
+    slider.style.background = `linear-gradient(to right, #6320EE ${val}%, #A6B1E1 ${val}%)`;
   }
 
   return (

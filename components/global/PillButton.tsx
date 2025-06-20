@@ -31,7 +31,7 @@ const PillButton: React.FC<PillButtonProps> = ({
     }`,
     secondary: `${
       isSelected
-        ? "bg-[#6320EE] text-white hover:bg-[#0C090D]"
+        ? "bg-[#6320EE] text-white hover:bg-[#A6B1E1]"
         : "bg-[#0C090D] text-white hover:bg-[#6320EE] border border-white"
     }`,
   };

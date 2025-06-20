@@ -19,10 +19,6 @@ type MoodImageStyleProp = {
 
 const ImageStyles: ImageStyle[] = [
   {
-    image: Random,
-    name: "Random",
-  },
-  {
     image: Landscape,
     name: "Landscape",
   },
@@ -37,6 +33,10 @@ const ImageStyles: ImageStyle[] = [
   {
     image: Gradient,
     name: "Gradient",
+  },
+  {
+    image: Random,
+    name: "Random",
   },
 ];
 

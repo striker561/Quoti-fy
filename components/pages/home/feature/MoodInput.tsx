@@ -37,7 +37,7 @@ export default function MoodInput({ onMoodChange }: MoodInputProps) {
   };
 
   return (
-    <div className="p-3 bg-[#A6B1E1]/30 rounded-[20px] border-2 border-solid border-indigo-700">
+    <div className="p-3 bg-[#A6B1E1]/30 rounded-[20px] border-2 border-solid border-[#A6B1E1]">
       <input
         type="text"
         value={moodText}
