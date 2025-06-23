@@ -1,7 +1,10 @@
 "use server";
-import { auth, signIn, signOut } from "../handlers/auth";
+import { signIn } from "../handlers/auth";
 
-export async function startSignIn(provider: string, redirectURL?: string):Promise<string> {
+export async function startSignIn(
+  provider: string,
+  redirectURL?: string
+): Promise<string> {
   try {
     const auth = await signIn(provider, {
       redirect: false,
@@ -13,13 +16,4 @@ export async function startSignIn(provider: string, redirectURL?: string):Promis
     console.error("Sign-in error:", error);
     throw new Error("Sign-in failed. Please try again.");
   }
-}
-
-export async function startSignOut() {
-  await signOut();
-}
-
-export async function getCurrentUser() {
-  const session = await auth();
-  return session?.user;
 }

@@ -48,7 +48,9 @@ export function AuthModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Sign In</Button>
+        <Button variant="outline" className="cursor-pointer">
+          Sign In
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import db from "../db/index";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 import { accounts, sessions, users } from "@/db/schema/auth";
 
 export const authOptions = {
@@ -10,6 +11,10 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
   ],
   jwt: {
     maxAge: Number(process.env.JWT_LIFESPAN || 60 * 60 * 24 * 7),
@@ -17,7 +22,7 @@ export const authOptions = {
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
-    sessionsTable: sessions
+    sessionsTable: sessions,
   }),
 };
 
