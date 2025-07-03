@@ -46,7 +46,7 @@ export default function MoodInput({ onMoodChange }: MoodInputProps) {
         onKeyDown={handleKeyDown}
         placeholder="One Word...."
         aria-label="Enter your current mood"
-        className="outline-none w-full h-[5rem] text-[25px] lg:text-[30px] placeholder:text-[#a5adb9] bg-transparent"
+        className="outline-none w-full h-[5rem] text-[25px] lg:text-[30px] placeholder:text-[#6320EE] bg-transparent text-[#6320EE] font-semibold"
       />
       <hr className="w-full h-[5px]" />
       <div className="mt-3 flex overflow-auto scrollbar-hide gap-2 py-1">

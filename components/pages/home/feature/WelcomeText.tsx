@@ -24,7 +24,7 @@ export default function WelcomeText() {
 
   const ordinal = getOrdinalSuffix(dayOfMonth);
 
-  const TimeText = `It is ${DaysList[dayOfWeek]} ${dayOfMonth}${ordinal} ${MonthList[monthOfYear]},`;
+  const TimeText = `It is ${DaysList[dayOfWeek]}, ${MonthList[monthOfYear]} ${dayOfMonth}${ordinal},`;
 
   return (
     <div className="mb-5">

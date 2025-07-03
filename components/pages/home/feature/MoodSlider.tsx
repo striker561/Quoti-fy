@@ -9,7 +9,7 @@ import Happy from "../../../../public/images/emoji/high.png";
 
 interface MoodEmoji {
   image: StaticImageData;
-  Alt: string;
+  alt: string;
 }
 
 type MoodSliderProps = {
@@ -19,15 +19,15 @@ type MoodSliderProps = {
 const defaultMoodsEmoji: MoodEmoji[] = [
   {
     image: Sad,
-    Alt: "Sad",
+    alt: "Sad",
   },
   {
     image: Mid,
-    Alt: "Neutral",
+    alt: "Neutral",
   },
   {
     image: Happy,
-    Alt: "Happy",
+    alt: "Happy",
   },
 ];
 
@@ -45,9 +45,11 @@ export default function MoodSlider({ onSliderChange }: MoodSliderProps) {
           current += 1;
           setSliderValue(current);
           updateSliderBackground(slider);
-          setTimeout(animateTo50, 5);
+          requestAnimationFrame(animateTo50);
         }
       };
+
+      if (DEFAULT_MOOD_RANGE > 100 || DEFAULT_MOOD_RANGE < 0) return;
       animateTo50();
     }
     return () => {
@@ -79,20 +81,22 @@ export default function MoodSlider({ onSliderChange }: MoodSliderProps) {
         <div className="slider-container">
           <input
             type="range"
+            step="1"
             min="0"
             max="100"
             value={sliderValue}
             onChange={handleSliderChange}
             className="custom-slider"
             id="progressRange"
+            aria-label="Mood level slider"
           />
         </div>
         <div className="mt-1 flex justify-between">
           {defaultMoodsEmoji.map((emoji) => (
             <EmojiCons
-              key={emoji.Alt}
+              key={emoji.alt}
               image={emoji.image}
-              imageAlt={emoji.Alt}
+              imageAlt={emoji.alt}
             />
           ))}
         </div>
