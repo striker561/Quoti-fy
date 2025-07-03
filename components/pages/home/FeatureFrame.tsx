@@ -7,15 +7,11 @@ import MoodImageStyle from "./feature/ImageStyle";
 import MoodFilterSelect from "./feature/FilterSelect";
 import GenerateButton from "./feature/GenerateBtn";
 import { DEFAULT_MOOD_RANGE } from "@/lib/constants";
-
-type FeatureState = {
-  mood: string;
-  moodRange: number;
-  moodImageStyle: string;
-  moodFilter: string;
-};
+import { FeatureState } from "@/types/shared";
+import { useMoodGenerator } from "@/hooks/useMoodGenerator";
 
 export default function FeatureFrame() {
+  const { generateMood, isGenerating, error } = useMoodGenerator();
   const [formState, setFormState] = useState<FeatureState>({
     mood: "",
     moodRange: DEFAULT_MOOD_RANGE,
@@ -28,6 +24,17 @@ export default function FeatureFrame() {
     formState.moodRange > 0 &&
     formState.moodImageStyle.trim() !== "" &&
     formState.moodFilter.trim() !== "";
+
+  const handleOnSubmit = async () => {
+    try {
+      const result = await generateMood(formState);
+      console.log(result);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  console.log(isGenerating)
+  console.log(error)
 
   return (
     <div className="my-20 @container">
@@ -51,7 +58,7 @@ export default function FeatureFrame() {
             setFormState((s) => ({ ...s, moodFilter }))
           }
         />
-        <GenerateButton isActive={isComplete} />
+        <GenerateButton isActive={isComplete} onClick={handleOnSubmit} />
       </div>
     </div>
   );

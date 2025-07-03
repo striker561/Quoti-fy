@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
-import { AppWindow, Loader2 } from "lucide-react";
+import { AppWindow, Loader2, UserRound } from "lucide-react";
 import { ModeToggle } from "@/components/theme/ThemeToggle";
-import ProfileIcon from "../../../public/images/icons/Profile.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,17 +40,31 @@ export default function HomeNavBar() {
           <>
             <DropdownMenu>
               <DropdownMenuTrigger asChild disabled={!currentUser}>
-                <Image
-                  src={currentUser?.image ? currentUser.image : ProfileIcon}
-                  alt={
-                    currentUser
-                      ? `${currentUser.name}'s profile picture`
-                      : "Default profile icon"
-                  }
-                  className="p-1 rounded-full border-2 border-solid border-[#6320EE] flex items-center justify-center cursor-pointer drop-shadow-xl"
-                  width={36}
-                  height={36}
-                />
+                {currentUser ? (
+                  currentUser.image ? (
+                    <div className="max-w-[44px] overflow-hidden">
+                      <Image
+                        src={currentUser.image}
+                        alt={
+                          currentUser.name
+                            ? `${currentUser.name}'s profile picture`
+                            : "Default profile icon"
+                        }
+                        className="p-1 rounded-full border-2 border-solid border-[#6320EE] flex items-center justify-center cursor-pointer drop-shadow-xl w-9 h-9 object-cover"
+                        width={36}
+                        height={36}
+                      />
+                    </div>
+                  ) : (
+                    <div className="border-2 rounded-full p-1 border-[#6320EE]">
+                      <UserRound />
+                    </div>
+                  )
+                ) : (
+                  <div className="border-2 rounded-full p-1 border-[#A6B1E1]">
+                    <UserRound />
+                  </div>
+                )}
               </DropdownMenuTrigger>
               {currentUser && (
                 <DropdownMenuContent align="center">
