@@ -8,7 +8,9 @@ export async function generateImageWithGemini(
   });
 
   const response = await client.models.generateContent({
-    model: "gemini-2.0-flash-preview-image-generation",
+    model: process.env.GEMINI_IMAGE_GEN_MODEL
+      ? process.env.GEMINI_IMAGE_GEN_MODEL
+      : "gemini-2.0-flash-preview-image-generation",
     contents: prompt,
     config: {
       responseModalities: [Modality.TEXT, Modality.IMAGE],
