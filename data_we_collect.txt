@@ -1,0 +1,7 @@
+This is needed for privacy policy or terms and conditions 
+1. We collect the input that you enter for generating mood, this may be saved in the database 
+2. To personalize your mood we use your location and date, we get your location by determine the origin of your ip address and including it in the prompt 
+3. We use open ai + google gemini
+4. We collect the primary detail supplied to us by the oauth providers github and google
+
+If you have an issue with any of this, please do not use this service
