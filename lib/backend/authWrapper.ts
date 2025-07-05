@@ -2,6 +2,7 @@ import { auth } from "@/handlers/auth";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
 
+// This gives more refine control over auth, used it intentionally instead of middle ware 😉
 export function withAuth(
   handler: (user: User, req: NextRequest) => Promise<Response>
 ) {

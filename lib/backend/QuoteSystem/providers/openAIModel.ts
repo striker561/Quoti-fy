@@ -1,6 +1,8 @@
 import OpenAI from "openai";
 
-export async function generateQuoteWithOpenAI(prompt: string): Promise<string> {
+export async function generateQuoteWithOpenAI(
+  prompt: string
+): Promise<string[]> {
   const client = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
 
   const response = await client.chat.completions.create({
@@ -15,8 +17,7 @@ export async function generateQuoteWithOpenAI(prompt: string): Promise<string> {
       : 1,
   });
 
-  return (
-    response.choices?.[0]?.message?.content?.trim() ??
-    "Stay inspired, no quote available"
-  );
+  return response.choices
+    .map((choice) => choice.message?.content?.trim() || "")
+    .filter(Boolean);
 }
