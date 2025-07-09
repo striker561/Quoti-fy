@@ -1,32 +1,31 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { apiRequest } from "@/lib/apiRequest";
-import { FeatureState } from "@/types/shared";
+import { FeatureState, MoodResponseProps, QuoteResult } from "@/types/shared";
 
-export function useMoodGenerator() {
+export function useMoodGenerator(): MoodResponseProps {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const generateMood = async (form: FeatureState) => {
-    setIsGenerating(true);
-    setError(null);
-
-    try {
-      const result = await apiRequest({
-        method: "POST",
-        url: "/quotes/generate",
-        data: form,
-      });
-
-      return result;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw error;
+  const generateMood = useCallback(
+    async (form: FeatureState): Promise<QuoteResult> => {
+      setIsGenerating(true);
+      setError(null);
+      try {
+        const result = await apiRequest({
+          method: "POST",
+          url: "/quotes/generate",
+          data: form,
+        });
+        return result as QuoteResult;
+      } catch (error: unknown) {
+        if (error instanceof Error) throw error;
+        throw new Error("An unknown error occurred");
+      } finally {
+        setIsGenerating(false);
       }
-      throw new Error("An unknown error occurred");
-    } finally {
-      setIsGenerating(false);
-    }
-  };
+    },
+    []
+  );
 
   return { generateMood, isGenerating, error };
 }
