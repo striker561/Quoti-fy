@@ -15,6 +15,7 @@ import {
 import { useMoodGenerator } from "@/hooks/useMoodGenerator";
 import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
 import QuoteSlider from "@/components/shared/QuoteSlider";
+import QuoteImage from "@/components/shared/QuoteImage";
 
 export function QuoteSelectorModal({
   interaction,
@@ -40,8 +41,19 @@ export function QuoteSelectorModal({
       });
   }, [generateMood, interaction.open, moodFormData]);
 
+  const handleModalClose = () => {
+    interaction.onOpenChange(false);
+    setResult(null);
+    setError(null);
+  };
+
   return (
-    <Dialog open={interaction.open} onOpenChange={interaction.onOpenChange}>
+    <Dialog
+      open={interaction.open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) handleModalClose();
+      }}
+    >
       <DialogContent
         className="sm:max-w-[600px]"
         showCloseButton={!isGenerating}
@@ -71,7 +83,7 @@ export function QuoteSelectorModal({
 
                 <div className="flex justify-center w-full px-4">
                   <div className="flex flex-col gap-5 w-full max-w-[500px]">
-                    <div className="w-full aspect-[5/4] rounded-xl bg-gray-600"></div>
+                    <QuoteImage src={result?.generatedImage as string} />
 
                     <div className="space-y-5">
                       <QuoteSlider
