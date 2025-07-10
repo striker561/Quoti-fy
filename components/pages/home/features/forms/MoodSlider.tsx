@@ -1,11 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { StaticImageData } from "next/image";
-import { DEFAULT_MOOD_RANGE } from "@/lib/constants";
-import EmojiCons from "@/components/global/EmojiCons";
-import Sad from "../../../../public/images/emoji/low.png";
-import Mid from "../../../../public/images/emoji/mid.png";
-import Happy from "../../../../public/images/emoji/high.png";
+import { DEFAULT_MOOD_RANGE } from "@/data/constants";
+import EmojiCons from "@/components/shared/EmojiCons";
+import { HappyEmoji, MidEmoji, SadEmoji } from "@/data/images";
 
 interface MoodEmoji {
   image: StaticImageData;
@@ -18,15 +16,15 @@ type MoodSliderProps = {
 
 const defaultMoodsEmoji: MoodEmoji[] = [
   {
-    image: Sad,
+    image: SadEmoji,
     alt: "Sad",
   },
   {
-    image: Mid,
+    image: MidEmoji,
     alt: "Neutral",
   },
   {
-    image: Happy,
+    image: HappyEmoji,
     alt: "Happy",
   },
 ];

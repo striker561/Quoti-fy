@@ -1,5 +1,5 @@
-import TypewriterFadeIn from "@/components/global/TypeWritterEffect";
-import { DaysList, MonthList } from "@/lib/constants";
+import TypewriterFadeIn from "@/components/shared/TypeWritterEffect";
+import { DaysList, MonthList } from "@/data/constants";
 
 function getOrdinalSuffix(n: number): string {
   if (n >= 11 && n <= 13) return "th";

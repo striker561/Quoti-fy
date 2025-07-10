@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
 import { StaticImageData } from "next/image";
-import ImageRadio from "@/components/global/ImageRadio";
-import Random from "../../../../public/images/img/random.png";
-import SciFi from "../../../../public/images/img/sci-fi.avif";
-import Building from "../../../../public/images/img/building.avif";
-import Gradient from "../../../../public/images/img/gradient.avif";
-import Landscape from "../../../../public/images/img/landscape.avif";
+import ImageRadio from "@/components/shared/ImageRadio";
+import {
+  BuildingImageStyle,
+  GradientImageStyle,
+  LandscapeImageStyle,
+  RandomImageStyle,
+  SciFiImageStyle,
+} from "@/data/images";
 
 interface ImageStyle {
   image: StaticImageData;
@@ -19,23 +21,23 @@ type MoodImageStyleProp = {
 
 const ImageStyles: ImageStyle[] = [
   {
-    image: Landscape,
+    image: LandscapeImageStyle,
     name: "Landscape",
   },
   {
-    image: Building,
+    image: BuildingImageStyle,
     name: "Buildings",
   },
   {
-    image: SciFi,
+    image: SciFiImageStyle,
     name: "Sci-Fi",
   },
   {
-    image: Gradient,
+    image: GradientImageStyle,
     name: "Gradient",
   },
   {
-    image: Random,
+    image: RandomImageStyle,
     name: "Random",
   },
 ];

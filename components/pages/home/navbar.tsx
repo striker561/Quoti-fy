@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { AuthModal } from "@/components/global/modals/AuthModal";
+import { AuthModal } from "@/components/shared/modals/AuthModal";
 import { signOut, useSession } from "next-auth/react";
 
 export default function HomeNavBar() {

@@ -16,7 +16,7 @@ import {
   QuoteResult,
 } from "@/types/shared";
 import { useMoodGenerator } from "@/hooks/useMoodGenerator";
-import { SkeletonCard } from "@/components/global/preloaders/SkeletonCard";
+import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
 
 export function QuoteSelectorModal({
   interaction,

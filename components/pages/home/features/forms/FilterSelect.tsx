@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { DefaultFilters } from "@/lib/constants";
-import PillButton from "@/components/global/PillButton";
+import { DefaultFilters } from "@/data/constants";
+import PillButton from "@/components/shared/PillButton";
 
 type MoodFilerSelectProp = {
   onFilterChange: (filter: string) => void;
