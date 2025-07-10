@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { sanitizeQuote } from "../sanitizer";
 
 export async function generateQuoteWithOpenAI(
   prompt: string
@@ -18,6 +19,6 @@ export async function generateQuoteWithOpenAI(
   });
 
   return response.choices
-    .map((choice) => choice.message?.content?.trim() || "")
+    .map((choice) => sanitizeQuote(choice.message?.content || ""))
     .filter(Boolean);
 }
