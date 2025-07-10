@@ -18,7 +18,7 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
     let quote: string[];
     let image: string | null;
 
-    if (process.env.TEST_QUOTES == "false") {
+    if (process.env.USE_TEST_QUOTES == "false") {
       const data = (await req.json()) as FeatureState;
 
       // Fetch IP
@@ -45,6 +45,11 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
       // Connect to Models
       quote = await generateQuoteWithOpenAI(QuotePrompt);
       image = await generateImageWithGemini(ImagePrompt);
+
+      // Check image
+      if (image && !image.startsWith("data:image")) {
+        image = `data:image/png;base64,${image}`;
+      }
     } else {
       await new Promise((resolve) => setTimeout(resolve, 1200));
       quote = TEST_QUOTES;
