@@ -14,6 +14,11 @@ export interface MoodPromptInput {
   event?: string | null;
 }
 
+export type ApiResult = {
+  message: string;
+  data: [] | object | null;
+};
+
 export type QuoteResult = {
   generatedQuote: string[];
   generatedImage: string;

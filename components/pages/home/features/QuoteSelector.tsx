@@ -2,14 +2,11 @@
 import { useEffect, useState } from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import {
   FeatureState,
   ModalInteractionProps,
@@ -17,6 +14,7 @@ import {
 } from "@/types/shared";
 import { useMoodGenerator } from "@/hooks/useMoodGenerator";
 import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
+import QuoteSlider from "@/components/shared/QuoteSlider";
 
 export function QuoteSelectorModal({
   interaction,
@@ -68,19 +66,22 @@ export function QuoteSelectorModal({
             ) : (
               <>
                 <DialogHeader>
-                  <DialogTitle>Here is your quote</DialogTitle>
-                  <DialogDescription>Here is your quotes</DialogDescription>
+                  <DialogTitle className="text-center">“Quoti-fy”</DialogTitle>
                 </DialogHeader>
 
-                <div className="mt-5">
-                  <div className="flex flex-col gap-3"></div>
-                </div>
+                <div className="flex justify-center w-full px-4">
+                  <div className="flex flex-col gap-5 w-full max-w-[500px]">
+                    <div className="w-full aspect-[5/4] rounded-xl bg-gray-600"></div>
 
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                  </DialogClose>
-                </DialogFooter>
+                    <div className="space-y-5">
+                      <QuoteSlider
+                        quotes={result?.generatedQuote as string[]}
+                      />
+
+                      <div className="h-10 w-full bg-gray-600 rounded-full" />
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </>
