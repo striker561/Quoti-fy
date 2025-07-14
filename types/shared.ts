@@ -1,3 +1,5 @@
+import { QuoteImageResponse, QuoteResponse } from "./responses";
+
 export type FeatureState = {
     mood: string;
     moodRange: number;
@@ -19,23 +21,14 @@ export type ApiResult = {
     data: [] | object | null;
 };
 
-export type QuoteResult = {
-    generatedQuote: string[] | null;
-    generatedImage: string | null;
-    quota: {
-        quote: {
-            current: number;
-            max: number;
-        },
-        image: {
-            current: number;
-            max: number;
-        }
-    }
+export type QuoteResponseProps = {
+    generate: (form: FeatureState) => Promise<QuoteResponse>;
+    isGenerating: boolean;
+    error: string | null;
 };
 
-export type MoodResponseProps = {
-    generateMood: (form: FeatureState) => Promise<QuoteResult>;
+export type ImageResponseProps = {
+    generate: (form: FeatureState) => Promise<QuoteImageResponse>;
     isGenerating: boolean;
     error: string | null;
 };

@@ -1,33 +1,32 @@
 import { withAuth } from "@/lib/backend/authWrapper";
 import { getRedisClient } from "@/lib/backend/Redis/redis";
 import { apiResponse, getSecondsTillMidnight, incrementQuotaWithExpiry } from "@/lib/generic";
-import { buildQuotePrompt } from "@/lib/backend/QuoteSystem/promptEngine";
-import { generateQuoteWithOpenAI } from "@/lib/backend/QuoteSystem/providers/openAIModel";
+import { buildImagePrompt } from "@/lib/backend/QuoteSystem/promptEngine";
+import { generateImageWithGemini } from "@/lib/backend/QuoteSystem/providers/googleModel";
 import { getLocationByIP } from "@/lib/backend/getLocationByIP";
+import { getRandomImageBase64 } from "@/data/test/getRandomImage";
+import { TEST_IMAGES_FOLDER } from "@/data/test/constants";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
 import { FeatureState, MoodPromptInput } from "@/types/shared";
-import { TEST_QUOTES } from "@/data/test/constants";
-import { QuoteResponse } from "@/types/responses";
+import { QuoteImageResponse } from "@/types/responses";
 
-const QUOTE_DAILY_LIMIT = parseInt(process.env.MAX_QUOTE_PER_DAY ?? "10");
-const QUOTE_PER_REQ = parseInt(process.env.QUOTE_PER_REQUEST ?? "2");
+const IMAGE_DAILY_LIMIT = parseInt(process.env.MAX_IMAGE_PER_DAY ?? "3");
 
 export const POST = withAuth(async (user: User, req: NextRequest) => {
     try {
-
         const isTestMode = process.env.USE_TEST_QUOTES === "true";
 
         const redis = !isTestMode ? getRedisClient() : null;
         const today = new Date().toISOString().split("T")[0];
-        const quoteKey = `quote_limit:${user.id}:${today}`;
+        const imageKey = `image_limit:${user.id}:${today}`;
         let updated = 0;
 
-
         if (!isTestMode && redis) {
-            const used = parseInt(await redis.get(quoteKey, "0") || "0", 10);
-            if (used >= QUOTE_DAILY_LIMIT) {
-                return apiResponse(429, "Quote limit reached");
+            const used = parseInt(await redis.get(imageKey, "0") || "0", 10);
+
+            if (used >= IMAGE_DAILY_LIMIT) {
+                return apiResponse(429, "Image limit reached");
             }
         }
 
@@ -47,31 +46,31 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
             location: location,
         };
 
-
-
-        let quote: string[] | null = null;
+        let image: string | null = null;
 
         if (isTestMode) {
             await new Promise((resolve) => setTimeout(resolve, 2400));
-            quote = TEST_QUOTES;
+            image = getRandomImageBase64(TEST_IMAGES_FOLDER);
         } else {
-            quote = await generateQuoteWithOpenAI(buildQuotePrompt(prompt));
+            const raw = await generateImageWithGemini(buildImagePrompt(prompt));
+            image = raw?.startsWith("data:image") ? raw : `data:image/png;base64,${raw}`;
         }
-
 
         if (!isTestMode && redis) {
-            updated = await incrementQuotaWithExpiry(redis, quoteKey, QUOTE_PER_REQ, getSecondsTillMidnight()) as number;
+            updated = await incrementQuotaWithExpiry(redis, imageKey, 1, getSecondsTillMidnight()) as number;
         }
-        const result: QuoteResponse = {
-            quotes: quote,
+
+        const result: QuoteImageResponse = {
+            image: image,
             quota: {
                 current: isTestMode ? 0 : updated,
-                max: QUOTE_DAILY_LIMIT
+                max: IMAGE_DAILY_LIMIT,
             },
         }
-        return apiResponse(200, "Quote generated", result);
+
+        return apiResponse(200, "Image generated", result);
     } catch (err) {
         console.error(err);
-        return apiResponse(500, "Failed to generate quote");
+        return apiResponse(500, "Failed to generate image");
     }
 });

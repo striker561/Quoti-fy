@@ -10,6 +10,9 @@ export function SkeletonCard() {
             <Skeleton className="h-5 w-3/4 sm:w-[350px]" />
           </div>
           <div className="flex justify-center">
+            <Skeleton className="h-5 w-full sm:w-[400px]" />
+          </div>
+          <div className="flex justify-center">
             <Skeleton className="h-10 w-full sm:w-[400px] rounded-full" />
           </div>
         </div>
