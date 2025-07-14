@@ -20,6 +20,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
+    "ioredis": "^5.6.1",
     "lucide-react": "^0.514.0",
     "motion": "^12.23.3",
     "next": "15.3.3",
