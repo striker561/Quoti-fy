@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getRedisClient } from "./backend/Redis/redis";
+import toast from "react-hot-toast"
 
 export function apiResponse(
     code: number = 200,
@@ -25,3 +26,27 @@ export async function incrementQuotaWithExpiry(redis: ReturnType<typeof getRedis
     return newUsage;
 }
 
+export function toastSuccess(message: string) {
+    return toast.success(message)
+}
+
+export function copyToClipBoard(string: string) {
+    navigator.clipboard.writeText(string)
+    toastSuccess('Copied')
+}
+
+export function shareUsingShareAPI({
+    title,
+    text,
+    url,
+}: {
+    title: string;
+    text: string;
+    url: string
+}) {
+    navigator.share({
+        title: title,
+        text: text,
+        url: url
+    })
+}

@@ -10,11 +10,9 @@ import {
 import { FeatureState, ModalInteractionProps } from "@/types/shared";
 import { useGenerateQuote, useGenerateImage } from "@/hooks/generators";
 import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
-import QuoteSlider from "@/components/shared/QuoteSlider";
 import QuoteImage from "@/components/shared/QuoteImage";
 import { QuoteImageResponse, QuoteResponse } from "@/types/responses";
-import { Button } from "@/components/ui/button";
-
+import QuoteRenderer from "./QuoteRender";
 
 export function QuoteSelectorModal({
   interaction,
@@ -34,6 +32,7 @@ export function QuoteSelectorModal({
   );
   const [quoteError, setQuoteError] = useState<string | null>(null);
   const [imageError, setImageError] = useState<Error | null>(null);
+
 
   const handleModalClose = () => {
     interaction.onOpenChange(false);
@@ -63,6 +62,13 @@ export function QuoteSelectorModal({
       });
   };
 
+  const handleGenerateQuoteImageGen = () => {
+    console.log({
+      image: imageResult?.image,
+      quote: quoteResult?.quotes,
+    });
+  };
+
   useEffect(() => {
     // TODO AUTO_GENERATE_ON_OPEN use context and add an option for user to decide of they want full control on how the quote is generated
     if (!interaction.open) return;
@@ -70,30 +76,6 @@ export function QuoteSelectorModal({
   }, [handleGenerateQuote, interaction.open]);
 
   const isGenerating = isGeneratingQuote;
-
-  const renderQuoteSection = () => (
-    <div className="space-y-5">
-      <QuoteSlider
-        quotes={quoteResult?.quotes ?? ["✨ Your quote appears here..."]}
-      />
-
-      <Button
-        onClick={handleGenerateQuote}
-        disabled={isGeneratingQuote}
-        variant="ghost"
-        className="
-          px-4 py-2 text-sm font-medium rounded-full
-          backdrop-blur-md bg-[#6320EE]/30 text-white
-          border border-white/20 shadow-md
-          transition hover:bg-[#A6B1E1]/40 active:scale-95
-          w-full cursor-pointer"
-      >
-        {isGeneratingQuote ? "Generating..." : "🔁 Regenerate Quote"}
-      </Button>
-
-      <div className="h-10 w-full bg-gray-600 rounded-full" />
-    </div>
-  );
 
   return (
     <Dialog
@@ -125,7 +107,7 @@ export function QuoteSelectorModal({
           <>
             <DialogHeader>
               <DialogTitle className="text-center">
-                {quoteResult ? "“Quoti-fy”" : "Ready to generate?"}
+                {quoteResult ? "Preview" : "Ready to generate?"}
               </DialogTitle>
               {!quoteResult && (
                 <DialogDescription className="text-center text-muted-foreground">
@@ -135,14 +117,26 @@ export function QuoteSelectorModal({
             </DialogHeader>
 
             <div className="flex justify-center w-full px-4">
-              <div className="flex flex-col gap-5 w-full max-w-[500px]">
+              <div className="flex flex-col gap-2 w-full max-w-[500px]">
                 <QuoteImage
                   src={imageResult?.image as string}
                   onGenerate={handleGenerateImage}
                   isGenerating={isGeneratingImage}
                   error={imageError}
                 />
-                {renderQuoteSection()}
+                {imageResult?.quota && (
+                  <p className="text-xs text-muted-foreground text-center">
+                    You&apos;ve used <b>{imageResult.quota.current}</b> of{" "}
+                    <b>{imageResult.quota.max}</b> image generations today.
+                  </p>
+                )}
+                <QuoteRenderer
+                  quoteResult={quoteResult}
+                  imageResult={imageResult}
+                  isGeneratingQuote={isGeneratingQuote}
+                  onGenerateQuote={handleGenerateQuote}
+                  onGenerateQuoteImageGen={handleGenerateQuoteImageGen}
+                />
               </div>
             </div>
           </>

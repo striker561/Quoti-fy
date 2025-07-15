@@ -16,7 +16,6 @@ export default function QuoteImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const showPlaceholder = !src || !isLoaded;
 
-  console.log(error)
   return (
     <div className="relative w-full aspect-[5/4] overflow-hidden rounded-xl bg-gray-300">
       {src && (

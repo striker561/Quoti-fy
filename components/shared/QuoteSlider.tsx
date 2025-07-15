@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface QuoteSliderProps {
   quotes: string[];
+  onQuoteChange?: (quote: string, index: number) => void;
 }
 
-export default function QuoteSlider({ quotes }: QuoteSliderProps) {
+export default function QuoteSlider({
+  quotes,
+  onQuoteChange,
+}: QuoteSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleDotClick = (index: number) => {
@@ -23,6 +27,12 @@ export default function QuoteSlider({ quotes }: QuoteSliderProps) {
       setCurrentIndex(currentIndex - 1);
     }
   };
+
+  useEffect(() => {
+    if (onQuoteChange) {
+      onQuoteChange(quotes[currentIndex], currentIndex);
+    }
+  }, [currentIndex, quotes, onQuoteChange]);
 
   return (
     <div className="w-full max-w-xl mx-auto text-center">
@@ -51,7 +61,7 @@ export default function QuoteSlider({ quotes }: QuoteSliderProps) {
         {quotes.map((_, idx) => (
           <button
             key={idx}
-            className={`h-2.5 w-2.5 rounded-full transition-all ${
+            className={`h-2.5 w-2.5 rounded-full transition-all cursor-pointer ${
               idx === currentIndex
                 ? "bg-primary scale-125"
                 : "bg-muted hover:bg-primary/50"
