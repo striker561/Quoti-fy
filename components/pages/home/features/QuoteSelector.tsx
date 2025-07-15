@@ -107,7 +107,7 @@ export function QuoteSelectorModal({
           <>
             <DialogHeader>
               <DialogTitle className="text-center">
-                {quoteResult ? "Preview" : "Ready to generate?"}
+                {quoteResult ? "Quote Preview" : "Ready to generate?"}
               </DialogTitle>
               {!quoteResult && (
                 <DialogDescription className="text-center text-muted-foreground">

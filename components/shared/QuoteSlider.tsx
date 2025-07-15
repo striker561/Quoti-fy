@@ -49,7 +49,7 @@ export default function QuoteSlider({
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
           >
-            <p className="text-lg font-medium text-gray-800 dark:text-gray-200">
+            <p className="text-sm font-medium italic text-gray-800 dark:text-gray-200">
               “{quotes[currentIndex]}”
             </p>
           </motion.div>
@@ -63,8 +63,8 @@ export default function QuoteSlider({
             key={idx}
             className={`h-2.5 w-2.5 rounded-full transition-all cursor-pointer ${
               idx === currentIndex
-                ? "bg-primary scale-125"
-                : "bg-muted hover:bg-primary/50"
+                ? "bg-primary scale-150"
+                : "bg-[#D9D9D9] hover:bg-primary/50"
             }`}
             onClick={() => handleDotClick(idx)}
             aria-label={`Go to quote ${idx + 1}`}
