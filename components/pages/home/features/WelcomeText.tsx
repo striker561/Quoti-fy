@@ -3,38 +3,33 @@ import { DaysList, MonthList } from "@/data/constants";
 
 function getOrdinalSuffix(n: number): string {
   if (n >= 11 && n <= 13) return "th";
-  switch (n % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
-  }
+  const lastDigit = n % 10;
+  return lastDigit === 1
+    ? "st"
+    : lastDigit === 2
+    ? "nd"
+    : lastDigit === 3
+    ? "rd"
+    : "th";
 }
 
 export default function WelcomeText() {
   const now = new Date();
-
-  const dayOfWeek = now.getDay();
+  const dayOfWeek = DaysList[now.getDay()];
+  const monthOfYear = MonthList[now.getMonth()];
   const dayOfMonth = now.getDate();
-  const monthOfYear = now.getMonth();
-
   const ordinal = getOrdinalSuffix(dayOfMonth);
 
-  const TimeText = `It is ${DaysList[dayOfWeek]}, ${MonthList[monthOfYear]} ${dayOfMonth}${ordinal},`;
+  const timeText = `It is ${dayOfWeek}, ${monthOfYear} ${dayOfMonth}${ordinal},`;
 
   return (
-    <div className="mb-5">
-      <h2 className="font-medium text-[20px] lg:text-[25px] capitalize">
+    <div className="mb-6" role="presentation">
+      <h2 className="font-medium text-[20px] lg:text-[25px] capitalize leading-relaxed">
         <TypewriterFadeIn text="Hi," delay={1} />
         <br />
-        <TypewriterFadeIn text={TimeText} delay={3} />
+        <TypewriterFadeIn text={timeText} delay={2.5} />
         <br />
-        <TypewriterFadeIn text="How are you feeling today ?" delay={5} />
-        <br />
+        <TypewriterFadeIn text="How are you feeling today?" delay={4.5} />
       </h2>
     </div>
   );

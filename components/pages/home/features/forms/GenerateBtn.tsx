@@ -1,4 +1,4 @@
-type GenerateButtonProp = {
+type GenerateButtonProps = {
   isActive: boolean;
   onClick?: () => void;
 };
@@ -6,23 +6,22 @@ type GenerateButtonProp = {
 export default function GenerateButton({
   isActive,
   onClick,
-}: GenerateButtonProp) {
+}: GenerateButtonProps) {
   return (
-    <div className="mt-[35px] flex justify-center">
+    <div className="mt-9 flex justify-center">
       <button
-        className={`h-[4rem] w-75 rounded-[50px] border-[0.5] border-white drop-shadow-lg transition-all
-                    ${
-                      isActive
-                        ? "bg-gradient-to-r from-[#0C090D] from-32% to-[#6320EE] to-62%"
-                        : "bg-[#A6B1E1] cursor-not-allowed"
-                    }
-                `}
+        className={`px-6 py-3 rounded-full text-white font-semibold text-base lg:text-lg
+          transition-all duration-300 ease-in-out shadow-lg w-full
+          ${
+            isActive
+              ? "bg-gradient-to-r from-[#0C090D] via-[#2C1A4E] to-[#6320EE] hover:brightness-110 active:scale-95"
+              : "bg-[#C2C2D6] cursor-not-allowed opacity-70"
+          }
+        `}
         disabled={!isActive}
         onClick={isActive ? onClick : undefined}
       >
-        <span className="font-semibold text-[15px] lg:text-[20px] text-white">
-          Generate Quote
-        </span>
+        Generate Quote
       </button>
     </div>
   );

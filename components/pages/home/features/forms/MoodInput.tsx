@@ -36,7 +36,7 @@ export default function MoodInput({ onMoodChange }: MoodInputProps) {
   };
 
   return (
-    <div className="p-3 bg-[#A6B1E1]/30 rounded-[20px] border-2 border-solid border-[#A6B1E1]">
+    <div className="p-3 bg-[#A6B1E1]/30 rounded-[20px] border-2 border-solid border-[#A6B1E1] dark:bg-muted/30">
       <input
         type="text"
         value={moodText}
@@ -45,9 +45,9 @@ export default function MoodInput({ onMoodChange }: MoodInputProps) {
         onKeyDown={handleKeyDown}
         placeholder="One Word...."
         aria-label="Enter your current mood"
-        className="outline-none w-full h-[5rem] text-[25px] lg:text-[30px] placeholder:text-[#6320EE] bg-transparent text-[#6320EE] font-semibold"
+        className="outline-none w-full h-[5rem] text-[25px] lg:text-[30px] placeholder:text-[#A6B1E1] bg-transparent text-[#6320EE] dark:text-[#fff]  font-semibold"
       />
-      <hr className="w-full h-[5px]" />
+      <hr className="w-full border-t border-border my-2" />
       <div className="mt-3 flex overflow-auto scrollbar-hide gap-2 py-1">
         {DefaultMoods.map((mood) => (
           <PillButton
