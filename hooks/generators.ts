@@ -1,12 +1,13 @@
 import { useCallback, useState } from "react";
 import { apiRequest } from "@/lib/apiRequest";
 import {
-    ApiResult,
     FeatureState,
     ImageResponseProps,
     QuoteResponseProps,
+    QuotifyResponseProp,
 } from "@/types/shared";
-import { QuoteImageResponse, QuoteResponse } from "@/types/responses";
+import { APIResponse, QuoteImageResponse, QuoteResponse, QuotifyResponse } from "@/types/responses";
+import { QuotifyRequest } from "@/types/requests";
 
 
 
@@ -19,7 +20,7 @@ export function useGenerateQuote(): QuoteResponseProps {
             setIsGenerating(true);
             setError(null);
             try {
-                const result: ApiResult = await apiRequest({
+                const result: APIResponse = await apiRequest({
                     method: "POST",
                     url: "/quotes/generate",
                     data: form,
@@ -48,7 +49,7 @@ export function useGenerateImage(): ImageResponseProps {
             setIsGenerating(true);
             setError(null);
             try {
-                const result: ApiResult = await apiRequest({
+                const result: APIResponse = await apiRequest({
                     method: "POST",
                     url: "/images/generate",
                     data: form,
@@ -65,4 +66,33 @@ export function useGenerateImage(): ImageResponseProps {
     );
 
     return { generate: generateImage, isGenerating, error };
+}
+
+
+export function UseQuotify(): QuotifyResponseProp {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const quotifyImage = useCallback(
+        async (form: QuotifyRequest): Promise<QuotifyResponse> => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                const result: APIResponse = await apiRequest({
+                    method: "POST",
+                    url: "/quotify",
+                    data: form
+                })
+                return result.data as QuotifyResponse;
+            } catch (error: unknown) {
+                if (error instanceof Error) throw error;
+                throw new Error("An unknown error occurred");
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        []
+    );
+
+    return { quotify: quotifyImage, isLoading, error }
 }

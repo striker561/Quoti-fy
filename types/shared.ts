@@ -1,4 +1,5 @@
-import { QuoteImageResponse, QuoteResponse } from "./responses";
+import { QuotifyRequest } from "./requests";
+import { QuoteImageResponse, QuoteResponse, QuotifyResponse } from "./responses";
 
 export type FeatureState = {
     mood: string;
@@ -16,10 +17,6 @@ export interface MoodPromptInput {
     event?: string | null;
 }
 
-export type ApiResult = {
-    message: string;
-    data: [] | object | null;
-};
 
 export type QuoteResponseProps = {
     generate: (form: FeatureState) => Promise<QuoteResponse>;
@@ -32,6 +29,12 @@ export type ImageResponseProps = {
     isGenerating: boolean;
     error: string | null;
 };
+
+export type QuotifyResponseProp = {
+    quotify: (form: QuotifyRequest) => Promise<QuotifyResponse>;
+    isLoading: boolean;
+    error: string | null;
+}
 
 export type ModalInteractionProps = {
     open: boolean;

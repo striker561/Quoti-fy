@@ -8,11 +8,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FeatureState, ModalInteractionProps } from "@/types/shared";
-import { useGenerateQuote, useGenerateImage } from "@/hooks/generators";
+import {
+  useGenerateQuote,
+  useGenerateImage,
+  UseQuotify,
+} from "@/hooks/generators";
 import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
 import QuoteImage from "@/components/shared/QuoteImage";
-import { QuoteImageResponse, QuoteResponse } from "@/types/responses";
+import {
+  QuoteImageResponse,
+  QuoteResponse,
+  QuotifyResponse,
+} from "@/types/responses";
 import QuoteRenderer from "./QuoteRender";
+import { QuotifyRequest } from "@/types/requests";
 
 export function QuoteSelectorModal({
   interaction,
@@ -21,18 +30,26 @@ export function QuoteSelectorModal({
   interaction: ModalInteractionProps;
   moodFormData: FeatureState;
 }) {
+  // hooks
   const { generate: generateQuote, isGenerating: isGeneratingQuote } =
     useGenerateQuote();
   const { generate: generateImage, isGenerating: isGeneratingImage } =
     useGenerateImage();
+  const { quotify, isLoading: isQuotifying } = UseQuotify();
 
+  // results
   const [quoteResult, setQuoteResult] = useState<QuoteResponse | null>(null);
   const [imageResult, setImageResult] = useState<QuoteImageResponse | null>(
     null
   );
+  const [quotifyResult, setQuotifyResult] = useState<QuotifyResponse | null>(
+    null
+  );
+
+  // errors
   const [quoteError, setQuoteError] = useState<string | null>(null);
   const [imageError, setImageError] = useState<Error | null>(null);
-
+  const [quotifyError, setQuotifyError] = useState<string | null>(null);
 
   const handleModalClose = () => {
     interaction.onOpenChange(false);
@@ -63,10 +80,16 @@ export function QuoteSelectorModal({
   };
 
   const handleGenerateQuoteImageGen = () => {
-    console.log({
-      image: imageResult?.image,
-      quote: quoteResult?.quotes,
-    });
+    const quoteData: QuotifyRequest = {
+      image: imageResult?.image as string,
+      quote: quoteResult?.quotes?.[0] as string,
+    };
+    quotify(quoteData)
+      .then(setQuotifyResult)
+      .catch((err) => {
+        console.error(err);
+        setQuotifyError(err.message ?? "Something went wrong");
+      });
   };
 
   useEffect(() => {
@@ -75,7 +98,7 @@ export function QuoteSelectorModal({
     handleGenerateQuote();
   }, [handleGenerateQuote, interaction.open]);
 
-  const isGenerating = isGeneratingQuote;
+  const isGenerating = isGeneratingQuote || isQuotifying;
 
   return (
     <Dialog

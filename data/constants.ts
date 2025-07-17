@@ -38,3 +38,4 @@ export const DefaultMoods: string[] = [
 ];
 
 export const DefaultFilters: string[] = ["Original", "Nostalgic", "Old", "Pop"];
+export type ImageFilter = (typeof DefaultFilters)[number];
