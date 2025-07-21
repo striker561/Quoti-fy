@@ -22,6 +22,7 @@ import {
 } from "@/types/responses";
 import QuoteRenderer from "./QuoteRender";
 import { QuotifyRequest } from "@/types/requests";
+import QuotifyPreview from "./QuotifyPreview";
 
 export function QuoteSelectorModal({
   interaction,
@@ -57,6 +58,8 @@ export function QuoteSelectorModal({
     setImageResult(null);
     setQuoteError(null);
     setImageError(null);
+    setQuotifyError(null);
+    setQuotifyResult(null);
   };
 
   const handleGenerateQuote = useCallback(() => {
@@ -83,6 +86,7 @@ export function QuoteSelectorModal({
     const quoteData: QuotifyRequest = {
       image: imageResult?.image as string,
       quote: quoteResult?.quotes?.[0] as string,
+      filter: moodFormData.moodFilter,
     };
     quotify(quoteData)
       .then(setQuotifyResult)
@@ -126,6 +130,11 @@ export function QuoteSelectorModal({
             <DialogTitle className="sr-only">Generating Content</DialogTitle>
             <SkeletonCard />
           </>
+        ) : quotifyResult ? (
+          <QuotifyPreview
+            image={quotifyResult.image as string}
+            onReset={() => setQuotifyResult(null)}
+          />
         ) : (
           <>
             <DialogHeader>
