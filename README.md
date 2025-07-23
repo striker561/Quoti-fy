@@ -70,13 +70,13 @@ bun dev
 ## 📋 TODO
 
     
--  🔃 Generate shareable image with text overlay
+-  🔃 Generate shareable image with text overlay - In Progress, Need Help 🥲
     
--  🎯 Image filter effects (paper-like, B/W, etc.)
+-  🎯 Image filter effects (paper-like, B/W, etc.) - Integrated
     
 -  🧪 Zod input validation for image/quote endpoints
     
--  🗃️ Cloud storage for rendered images
+-  🗃️ Cloud storage for rendered images and Metadata
 
 ---
 
