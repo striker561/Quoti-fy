@@ -7,6 +7,7 @@ export function getPosition(
 ) {
     const lineHeight = lines * fontSize;
     const padding = 40;
+    const bottomLeeway = 200;
 
     const positions: Record<
         string,
@@ -32,17 +33,17 @@ export function getPosition(
         },
         "bottom-left": {
             x: padding,
-            y: height - lineHeight - padding + fontSize,
+            y: height - lineHeight - padding - bottomLeeway + fontSize,
             anchor: "start",
         },
         "bottom": {
             x: width / 2,
-            y: height - lineHeight - padding + fontSize,
+            y: height - lineHeight - padding - bottomLeeway + fontSize,
             anchor: "middle",
         },
         "bottom-right": {
             x: width - padding,
-            y: height - lineHeight - padding + fontSize,
+            y: height - lineHeight - padding - bottomLeeway + fontSize,
             anchor: "end",
         },
     };

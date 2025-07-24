@@ -2,17 +2,16 @@ export function fitTextToBox(
     text: string,
     maxWidth: number,
     maxHeight: number,
-    imageWidth: number
 ): { lines: string[]; fontSize: number } {
     const words = text.split(" ");
 
-    let low = 20;
-    let high = Math.floor(imageWidth / 20);
-    let bestFit: { lines: string[]; fontSize: number } = { lines: [], fontSize: 20 };
+    const maxFontSize = 150;
+    const minFontSize = 50;
+    let fontSize = maxFontSize;
 
-    while (low <= high) {
-        const fontSize = Math.floor((low + high) / 2);
+    let bestFit: { lines: string[]; fontSize: number } = { lines: [], fontSize: minFontSize };
 
+    while (fontSize >= minFontSize) {
         const maxCharsPerLine = Math.floor(maxWidth / (fontSize * 0.6));
         const lines: string[] = [];
         let currentLine = "";
@@ -30,10 +29,10 @@ export function fitTextToBox(
 
         if (textBlockHeight <= maxHeight) {
             bestFit = { lines, fontSize };
-            low = fontSize + 1;
-        } else {
-            high = fontSize - 1;
+            break;
         }
+
+        fontSize -= 2; 
     }
 
     return bestFit;

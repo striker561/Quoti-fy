@@ -1,28 +1,20 @@
 import sharp from "sharp";
 
 export async function analyzeImageArea(
-    imageBuffer: Buffer,
+    image: sharp.Sharp, // Changed from Buffer to sharp.Sharp
     textArea: { x: number; y: number; w: number; h: number }
 ): Promise<{ color: string; luminance: number }> {
     const { x, y, w, h } = textArea;
 
-    // Ensure dimensions are valid integers greater than 0
-    const extractWidth = Math.max(1, Math.floor(w));
-    const extractHeight = Math.max(1, Math.floor(h));
+    const { channels } = await image
+        .clone()
+        .extract({ left: Math.floor(x), top: Math.floor(y), width: Math.floor(w), height: Math.floor(h) })
+        .stats();
 
-    const cropped = await sharp(imageBuffer)
-        .extract({
-            left: Math.floor(x),
-            top: Math.floor(y),
-            width: extractWidth,
-            height: extractHeight,
-        })
-        .resize(1, 1, { fit: 'cover' })
-        .raw()
-        .toBuffer();
+    const r = channels[0].mean;
+    const g = channels[1].mean;
+    const b = channels[2].mean;
 
-    const [r, g, b] = cropped;
-    // Standard luminance formula
     const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
 
     return {

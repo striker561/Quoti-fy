@@ -3,8 +3,7 @@ import { applyFilter } from "./filters";
 import { generateOverlaySvg } from "./overlay/generateOverlaySvg";
 import { QuotifyRequest } from "@/types/requests";
 import { analyzeImageArea } from "./overlay/analyzeImageArea";
-import { POSITIONS } from "@/data/constants";
-import { Position } from "./types";
+
 
 export async function processQuotifyRequest(data: QuotifyRequest): Promise<Buffer> {
     const imageBuffer = Buffer.from(
@@ -12,36 +11,38 @@ export async function processQuotifyRequest(data: QuotifyRequest): Promise<Buffe
         "base64"
     );
 
-    const imageFile = sharp(imageBuffer);
-    const { width, height } = await imageFile.metadata();
+    const resizedImageBuffer = await sharp(imageBuffer)
+        // Resizing improves performance but may reduce image quality and quote placement.
+        // .resize({ width: 1024 })
+        .toBuffer();
 
-    // Apply filter first
-    const imageWithFilter = applyFilter(data.filter, imageFile);
-    const filteredImageBuffer = await imageWithFilter.clone().toBuffer();
+    const imagePipeline = sharp(resizedImageBuffer);
 
-    // Analyze color first (uses original image)
-    const colorAnalysis = await analyzeImageArea(filteredImageBuffer, {
+
+    const { width, height } = await imagePipeline.metadata();
+    const colorAnalysis = await analyzeImageArea(imagePipeline, {
         x: width! / 4,
         y: height! / 4,
         w: width! / 2,
         h: height! / 2
     });
 
-    const overlay = await generateOverlaySvg({
+    const overlaySvgBuffer = generateOverlaySvg({
         text: data.quote,
         width,
         height,
-        position: getRandomPosition(),
+        position: "bottom",
         addBackground: false,
         textColor: colorAnalysis.color
     });
 
-    return imageWithFilter
-        .composite([{ input: overlay }])
-        .jpeg({ quality: 85, mozjpeg: true })
+    const finalImageBuffer = await applyFilter(data.filter, imagePipeline)
+        .composite([{
+            input: overlaySvgBuffer,
+            tile: true
+        }])
+        .webp({ quality: 80 })
         .toBuffer();
-}
 
-function getRandomPosition(): Position {
-    return POSITIONS[Math.floor(Math.random() * POSITIONS.length)];
+    return finalImageBuffer;
 }

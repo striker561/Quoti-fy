@@ -20,27 +20,27 @@ interface OverlayOptions {
     addBackground?: boolean;
 }
 
-// The following function and related logic were generated with AI assistance, you can adjust if you have a lot of experience
-export async function generateOverlaySvg({
+export function generateOverlaySvg({
     text,
     width,
     height,
-    position = "center",
+    position = "bottom",
     addBackground = true,
     textColor = "#ffffff",
-}: OverlayOptions): Promise<Buffer> {
-    const { lines: fittedLines, fontSize } = fitTextToBox(text, width, height, width - 100)
+}: OverlayOptions): Buffer {
+    const { lines: fittedLines, fontSize } = fitTextToBox(
+        text,
+        width,
+        height,
+    );
     const { x, y, anchor } = getPosition(position, width, height, fittedLines.length, fontSize);
-
 
     const bg = addBackground
         ? `<rect x="0" y="${y - fontSize}" width="${width}" height="${(fittedLines.length + 1) * fontSize}" fill="rgba(0,0,0,0.4)" />`
         : "";
 
     const svgLines = fittedLines
-        .map((line, i) => {
-            return `<text x="${x}" y="${y + i * fontSize}" text-anchor="${anchor}" class="quote">${line}</text>`;
-        })
+        .map((line, i) => `<text x="${x}" y="${y + i * fontSize}" text-anchor="${anchor}" class="quote">${line}</text>`)
         .join("");
 
     const svg = `
@@ -51,6 +51,9 @@ export async function generateOverlaySvg({
           font-size: ${fontSize}px;
           font-family: Georgia, 'Palatino Linotype', serif;
           font-weight: bold;
+          stroke: black;
+          stroke-width: 1.5px; /* Slightly thicker for better visibility */
+          paint-order: stroke fill;
         }
       </style>
       ${bg}
