@@ -30,6 +30,10 @@ export function toastSuccess(message: string) {
     return toast.success(message)
 }
 
+export function toastFailure(message: string) {
+    return toast.error(message)
+}
+
 export function copyToClipBoard(string: string) {
     navigator.clipboard.writeText(string)
     toastSuccess('Copied')

@@ -3,24 +3,28 @@ import { QuoteImageResponse, QuoteResponse } from "@/types/responses";
 import { Button } from "@/components/ui/button";
 import QuoteSlider from "@/components/shared/QuoteSlider";
 import { copyToClipBoard, shareUsingShareAPI } from "@/lib/generic";
-import { useState } from "react";
 
 interface QuoteRendererProps {
   quoteResult: QuoteResponse | null;
   imageResult: QuoteImageResponse | null;
   isGeneratingQuote: boolean;
+  isGeneratingImage: boolean;
   onGenerateQuote: () => void;
+  activeQuoteIndex: number;
   onGenerateQuoteImageGen: () => void;
+  setActiveQuoteIndex: (index: number) => void;
 }
 
 export default function QuoteRenderer({
   quoteResult,
   imageResult,
   isGeneratingQuote,
+  isGeneratingImage,
   onGenerateQuote,
   onGenerateQuoteImageGen,
+  activeQuoteIndex,
+  setActiveQuoteIndex,
 }: QuoteRendererProps) {
-  const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
   const isWebShareAvailable =
     typeof navigator !== "undefined" && navigator.share;
 
@@ -88,7 +92,7 @@ export default function QuoteRenderer({
             </div>
           )}
 
-          {imageResult?.image && (
+          {imageResult?.image && !isGeneratingImage && (
             <Button
               onClick={onGenerateQuoteImageGen}
               variant="outline"

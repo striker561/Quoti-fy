@@ -5,6 +5,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Download, Save } from "lucide-react";
+import { useState } from "react";
+import { toastFailure, toastSuccess } from "@/lib/generic";
 
 interface QuotifyPreviewProp {
   image: string;
@@ -12,6 +15,43 @@ interface QuotifyPreviewProp {
 }
 
 export default function QuotifyPreview({ image, onReset }: QuotifyPreviewProp) {
+  const [isDownloading, setIsDownloading] = useState(false);
+  
+  const handleDownload = async () => {
+    try {
+      setIsDownloading(true);
+      const res = await fetch(image);
+      const blob = await res.blob();
+      const pngBlob =
+        blob.type === "image/png"
+          ? blob
+          : await blob
+              .arrayBuffer()
+              .then((buffer) => new Blob([buffer], { type: "image/png" }));
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(pngBlob);
+      link.download = `quotify-${new Date().toISOString().slice(0, 10)}.png`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } catch (err) {
+      toastFailure("Failed to download image");
+      console.error(err);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  const handleSave = () => {
+    toastSuccess("Saved! (Cloud save functionality coming soon)");
+  };
+
+  const today = new Date().toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
   return (
     <>
       <DialogHeader>
@@ -22,28 +62,45 @@ export default function QuotifyPreview({ image, onReset }: QuotifyPreviewProp) {
       </DialogHeader>
 
       <div className="flex justify-center w-full px-4">
-        <div className="flex flex-col gap-2 w-full max-w-[500px]">
-          <div className="w-full aspect-[5/4] relative rounded-xl overflow-hidden">
+        <div className="flex flex-col gap-4 w-full max-w-[500px] items-center">
+          <div className="w-full relative rounded-xl overflow-hidden shadow-md">
             <Image
               src={image}
               alt="Final quote result"
-              fill={true}
-              className="object-cover"
+              layout="intrinsic"
+              width={800}
+              height={600}
+              className="w-full h-auto rounded-xl"
             />
           </div>
+
+          <p className="text-xs text-muted-foreground mt-1">{today}</p>
 
           <Button
             onClick={onReset}
             variant="ghost"
-            className="
-          px-4 py-2 text-sm font-medium rounded-full
-          backdrop-blur-md bg-[#6320EE]/50 text-white
-          border border-white/20 shadow-md
-          transition hover:bg-[#A6B1E1]/40 active:scale-95
-          w-full cursor-pointer"
+            className="px-4 py-2 text-sm font-medium rounded-full backdrop-blur-md bg-[#6320EE]/50 text-white border border-white/20 shadow-md transition hover:bg-[#A6B1E1]/40 active:scale-95 w-full cursor-pointer"
           >
             Reset
           </Button>
+
+          <div className="flex gap-2 w-full">
+            <Button
+              onClick={handleSave}
+              className="flex-1 px-4 py-2 text-sm font-medium rounded-full bg-[#A6B1E1] text-[#1F1B2E] hover:bg-[#C3C8F5] transition active:scale-95 flex items-center gap-2"
+            >
+              <Save className="w-4 h-4" />
+              Save
+            </Button>
+            <Button
+              onClick={handleDownload}
+              disabled={isDownloading}
+              className="flex-1 px-4 py-2 text-sm font-medium rounded-full bg-[#1F1B2E] text-white hover:bg-[#3A3650] transition active:scale-95 flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              {isDownloading ? "Downloading..." : "Download"}
+            </Button>
+          </div>
         </div>
       </div>
     </>

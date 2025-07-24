@@ -31,14 +31,14 @@ export function QuoteSelectorModal({
   interaction: ModalInteractionProps;
   moodFormData: FeatureState;
 }) {
-  // hooks
+  // --- Hooks ---
   const { generate: generateQuote, isGenerating: isGeneratingQuote } =
     useGenerateQuote();
   const { generate: generateImage, isGenerating: isGeneratingImage } =
     useGenerateImage();
   const { quotify, isLoading: isQuotifying } = UseQuotify();
 
-  // results
+  // --- States ---
   const [quoteResult, setQuoteResult] = useState<QuoteResponse | null>(null);
   const [imageResult, setImageResult] = useState<QuoteImageResponse | null>(
     null
@@ -46,20 +46,23 @@ export function QuoteSelectorModal({
   const [quotifyResult, setQuotifyResult] = useState<QuotifyResponse | null>(
     null
   );
+  const [activeQuoteIndex, setActiveQuoteIndex] = useState(0);
 
-  // errors
+  // --- Errors ---
   const [quoteError, setQuoteError] = useState<string | null>(null);
   const [imageError, setImageError] = useState<Error | null>(null);
   const [quotifyError, setQuotifyError] = useState<string | null>(null);
 
+  // --- Handlers ---
   const handleModalClose = () => {
     interaction.onOpenChange(false);
     setQuoteResult(null);
     setImageResult(null);
+    setQuotifyResult(null);
     setQuoteError(null);
     setImageError(null);
     setQuotifyError(null);
-    setQuotifyResult(null);
+    setActiveQuoteIndex(0);
   };
 
   const handleGenerateQuote = useCallback(() => {
@@ -68,7 +71,9 @@ export function QuoteSelectorModal({
       .then(setQuoteResult)
       .catch((err) => {
         console.error(err);
-        setQuoteError(err.message ?? "An unknown error occurred");
+        setQuoteError(
+          err?.message ?? "An error occurred while generating the quote."
+        );
       });
   }, [generateQuote, moodFormData]);
 
@@ -83,16 +88,19 @@ export function QuoteSelectorModal({
   };
 
   const handleGenerateQuoteImageGen = () => {
-    const quoteData: QuotifyRequest = {
-      image: imageResult?.image as string,
-      quote: quoteResult?.quotes?.[0] as string,
+    if (!imageResult?.image || !quoteResult?.quotes?.[activeQuoteIndex]) return;
+
+    const data: QuotifyRequest = {
+      image: imageResult.image,
+      quote: quoteResult.quotes[activeQuoteIndex],
       filter: moodFormData.moodFilter,
     };
-    quotify(quoteData)
+
+    quotify(data)
       .then(setQuotifyResult)
       .catch((err) => {
         console.error(err);
-        setQuotifyError(err.message ?? "Something went wrong");
+        setQuotifyError(err?.message ?? "Failed to merge quote and image.");
       });
   };
 
@@ -102,7 +110,7 @@ export function QuoteSelectorModal({
     handleGenerateQuote();
   }, [handleGenerateQuote, interaction.open]);
 
-  const isGenerating = isGeneratingQuote || isQuotifying;
+  const isBusy = isGeneratingQuote || isQuotifying;
 
   return (
     <Dialog
@@ -113,19 +121,18 @@ export function QuoteSelectorModal({
     >
       <DialogContent
         className="sm:max-w-[600px]"
-        showCloseButton={!isGenerating}
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
+        showCloseButton={!isBusy}
+        onInteractOutside={(e) => e.preventDefault()}
       >
+        {/* --- Error State --- */}
         {quoteError ? (
           <DialogHeader>
-            <DialogTitle>Unable to generate</DialogTitle>
+            <DialogTitle>Error Generating Quote</DialogTitle>
             <DialogDescription className="text-red-500 p-3 text-center">
               {quoteError}
             </DialogDescription>
           </DialogHeader>
-        ) : isGenerating ? (
+        ) : isBusy ? (
           <>
             <DialogTitle className="sr-only">Generating Content</DialogTitle>
             <SkeletonCard />
@@ -143,11 +150,12 @@ export function QuoteSelectorModal({
               </DialogTitle>
               {!quoteResult && (
                 <DialogDescription className="text-center text-muted-foreground">
-                  Choose to generate a quote or an image.
+                  You can generate a quote and image based on your mood.
                 </DialogDescription>
               )}
             </DialogHeader>
 
+            {/* --- Main Content --- */}
             <div className="flex justify-center w-full px-4">
               <div className="flex flex-col gap-2 w-full max-w-[500px]">
                 <QuoteImage
@@ -166,9 +174,17 @@ export function QuoteSelectorModal({
                   quoteResult={quoteResult}
                   imageResult={imageResult}
                   isGeneratingQuote={isGeneratingQuote}
+                  isGeneratingImage={isGeneratingImage}
                   onGenerateQuote={handleGenerateQuote}
                   onGenerateQuoteImageGen={handleGenerateQuoteImageGen}
+                  activeQuoteIndex={activeQuoteIndex}
+                  setActiveQuoteIndex={setActiveQuoteIndex}
                 />
+                {quotifyError && (
+                  <p className="text-xs text-center text-red-500">
+                    {quotifyError}
+                  </p>
+                )}
               </div>
             </div>
           </>
