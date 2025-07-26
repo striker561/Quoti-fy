@@ -76,7 +76,7 @@ bun dev
     
 -  🧪 Zod input validation for image/quote endpoints
     
--  🗃️ Cloud storage for rendered images and Metadata
+-  🗃️ Cloud storage for rendered images and Metadata - In Progress
 
 ---
 
