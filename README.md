@@ -55,28 +55,32 @@ bun dev
 ## 🧪 Dev Notes
 
 - Quote generation is **not cached** intentionally for personalization (mood + time + location).
-    
+
 - Image generation is handled client-side for now (canvas considered too heavy).
-    
+
 - Moving toward backend image rendering (Next.js API route with image pipeline).
-    
+
 - No background queue yet — expected to be community-driven or future phase.
-    
+
 - Plans to store rendered images + form data into a **cloud bucket**.
-    
 
 ---
 
 ## 📋 TODO
 
-    
--  🔃 Generate shareable image with text overlay - In Progress, Need Help 🥲
-    
--  🎯 Image filter effects (paper-like, B/W, etc.) - Integrated
-    
--  🧪 Zod input validation for image/quote endpoints
-    
--  🗃️ Cloud storage for rendered images and Metadata - In Progress
+- 🔃 Generate shareable image with text overlay - In Progress, Need Help 🥲
+
+- 🎯 Image filter effects (paper-like, B/W, etc.) - Integrated
+
+- 🧪 Zod input validation for image/quote endpoints
+
+- 🗃️ Cloud storage for rendered images and Metadata - In Progress
+
+- 🔄️ Retrieval of user uploaded images through quote
+
+- 📝 Privacy policy announcement and cookie declaration with link to the github repo
+
+- 👁️ Improving the SEO and all lighthouse parameters
 
 ---
 
@@ -92,13 +96,12 @@ Pull requests are welcome!
 If you're excited by expressive apps, image rendering, emotional design, or open-source learning, this project is for you.
 
 1. Fork it
-    
+
 2. Create your branch (`git checkout -b feature-xyz`)
-    
+
 3. Commit your changes
-    
+
 4. Push and create a PR
-    
 
 ---
 
