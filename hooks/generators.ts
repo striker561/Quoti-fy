@@ -11,7 +11,7 @@ import { QuotifyRequest } from "@/types/requests";
 
 
 
-export function useGenerateQuote(): QuoteResponseProps {
+export function UseGenerateQuote(): QuoteResponseProps {
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ export function useGenerateQuote(): QuoteResponseProps {
 }
 
 
-export function useGenerateImage(): ImageResponseProps {
+export function UseGenerateImage(): ImageResponseProps {
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState<string | null>(null);
 

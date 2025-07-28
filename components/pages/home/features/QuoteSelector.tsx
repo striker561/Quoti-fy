@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { FeatureState, ModalInteractionProps } from "@/types/shared";
 import {
-  useGenerateQuote,
-  useGenerateImage,
+  UseGenerateQuote,
+  UseGenerateImage,
   UseQuotify,
 } from "@/hooks/generators";
 import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
@@ -33,9 +33,9 @@ export function QuoteSelectorModal({
 }) {
   // --- Hooks ---
   const { generate: generateQuote, isGenerating: isGeneratingQuote } =
-    useGenerateQuote();
+    UseGenerateQuote();
   const { generate: generateImage, isGenerating: isGeneratingImage } =
-    useGenerateImage();
+    UseGenerateImage();
   const { quotify, isLoading: isQuotifying } = UseQuotify();
 
   // --- States ---
@@ -141,6 +141,15 @@ export function QuoteSelectorModal({
           <QuotifyPreview
             image={quotifyResult.image as string}
             onReset={() => setQuotifyResult(null)}
+            metadata={{
+              generatedImage: quotifyResult.image,
+              promptData: moodFormData,
+              quotifyReq: {
+                image: imageResult?.image as string,
+                quote: quoteResult?.quotes?.[activeQuoteIndex] as string,
+                filter: moodFormData.moodFilter,
+              },
+            }}
           />
         ) : (
           <>

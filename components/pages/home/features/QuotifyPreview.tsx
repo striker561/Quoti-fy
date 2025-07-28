@@ -8,13 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Download, Save } from "lucide-react";
 import { useState } from "react";
 import { toastFailure, toastSuccess } from "@/lib/generic";
+import { QuotifyMetaData } from "@/types/requests";
 
 interface QuotifyPreviewProp {
   image: string;
   onReset: () => void;
+  metadata: QuotifyMetaData;
 }
 
-export default function QuotifyPreview({ image, onReset }: QuotifyPreviewProp) {
+export default function QuotifyPreview({ image, onReset, metadata }: QuotifyPreviewProp) {
   const [isDownloading, setIsDownloading] = useState(false);
   
   const handleDownload = async () => {
@@ -43,6 +45,7 @@ export default function QuotifyPreview({ image, onReset }: QuotifyPreviewProp) {
   };
 
   const handleSave = () => {
+    console.log(metadata)
     toastSuccess("Saved! (Cloud save functionality coming soon)");
   };
 
