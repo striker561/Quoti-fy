@@ -62,19 +62,15 @@ bun dev
 
 - No background queue yet — expected to be community-driven or future phase.
 
-- Plans to store rendered images + form data into a **cloud bucket**.
-
 ---
 
 ## 📋 TODO
 
 - 🔃 Generate shareable image with text overlay - In Progress, Need Help 🥲
 
-- 🎯 Image filter effects (paper-like, B/W, etc.) - Integrated
+- 🛠️ Fix technical debts and making the code more maintainable and readable
 
 - 🧪 Zod input validation for image/quote endpoints
-
-- 🗃️ Cloud storage for rendered images and Metadata - In Progress
 
 - 🔄️ Retrieval of user uploaded images through quote
 
