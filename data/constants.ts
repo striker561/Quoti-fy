@@ -55,5 +55,5 @@ export const POSITIONS: Position[] = [
 ];
 
 // STORAGE CONST
-export const GENERATED_IMAGE_PATH = "quotified/";
-export const ORIGINAL_IMAGE_PATH = "original/";
+export const GENERATED_IMAGE_PATH = "generated";
+export const ORIGINAL_IMAGE_PATH = "original";

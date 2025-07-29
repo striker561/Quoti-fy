@@ -42,11 +42,15 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
             originalImageURL = await storage.upload(
                 `${userID}/${ORIGINAL_IMAGE_PATH}/${randomUUID()}`,
                 base64ToBuffer(data.quotifyReq.image),
+                "image/png",
+                "public-read"
             );
 
             generatedImageURL = await storage.upload(
                 `${userID}/${GENERATED_IMAGE_PATH}/${randomUUID()}`,
                 base64ToBuffer(data.quotifyReq.image),
+                "image/png",
+                "public-read"
             );
         } catch (err) {
             console.error("Image upload failed:", err);

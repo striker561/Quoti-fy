@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand, ListObjectsV2Command, ObjectCannedACL } from "@aws-sdk/client-s3";
 
 interface StorageServiceConfig {
     bucket: string;
@@ -29,13 +29,14 @@ export class StorageService {
         });
     }
 
-    async upload(fileName: string, buffer: Buffer, contentType = "application/octet-stream"): Promise<string> {
+    async upload(fileName: string, buffer: Buffer, contentType = "application/octet-stream", access_level?: ObjectCannedACL): Promise<string> {
         const key = `${this.keyPrefix}${fileName}`;
         await this.s3.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
             Body: buffer,
             ContentType: contentType,
+            ACL: access_level,
         }));
         return `${this.endpoint}/${this.bucket}/${key}`;
     }
