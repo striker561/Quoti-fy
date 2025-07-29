@@ -7,8 +7,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Download, Save } from "lucide-react";
 import { useState } from "react";
-import { toastFailure, toastSuccess } from "@/lib/generic";
+import { shareUsingShareAPI, toastFailure, toastSuccess } from "@/lib/generic";
 import { QuotifyMetaData } from "@/types/requests";
+import { APIResponse } from "@/types/responses";
+import { apiRequest } from "@/lib/apiRequest";
 
 interface QuotifyPreviewProp {
   image: string;
@@ -16,9 +18,14 @@ interface QuotifyPreviewProp {
   metadata: QuotifyMetaData;
 }
 
-export default function QuotifyPreview({ image, onReset, metadata }: QuotifyPreviewProp) {
+export default function QuotifyPreview({
+  image,
+  onReset,
+  metadata,
+}: QuotifyPreviewProp) {
   const [isDownloading, setIsDownloading] = useState(false);
-  
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
@@ -44,9 +51,26 @@ export default function QuotifyPreview({ image, onReset, metadata }: QuotifyPrev
     }
   };
 
-  const handleSave = () => {
-    console.log(metadata)
-    toastSuccess("Saved! (Cloud save functionality coming soon)");
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const result: APIResponse = await apiRequest({
+        method: "POST",
+        url: "/quotify/save",
+        data: metadata,
+      });
+      toastSuccess(result.message);
+      shareUsingShareAPI({
+        title: "Quoti-Fy",
+        text: metadata.quotifyReq.quote,
+        url: window.location.href,
+      });
+    } catch (err) {
+      console.log(err);
+      toastFailure(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const today = new Date().toLocaleDateString(undefined, {
@@ -54,6 +78,8 @@ export default function QuotifyPreview({ image, onReset, metadata }: QuotifyPrev
     month: "short",
     day: "numeric",
   });
+
+  const isBusy = isDownloading || isSaving;
 
   return (
     <>
@@ -79,21 +105,24 @@ export default function QuotifyPreview({ image, onReset, metadata }: QuotifyPrev
 
           <p className="text-xs text-muted-foreground mt-1">{today}</p>
 
-          <Button
-            onClick={onReset}
-            variant="ghost"
-            className="px-4 py-2 text-sm font-medium rounded-full backdrop-blur-md bg-[#6320EE]/50 text-white border border-white/20 shadow-md transition hover:bg-[#A6B1E1]/40 active:scale-95 w-full cursor-pointer"
-          >
-            Reset
-          </Button>
+          {!isBusy && (
+            <Button
+              onClick={onReset}
+              variant="ghost"
+              className="px-4 py-2 text-sm font-medium rounded-full backdrop-blur-md bg-[#6320EE]/50 text-white border border-white/20 shadow-md transition hover:bg-[#A6B1E1]/40 active:scale-95 w-full cursor-pointer"
+            >
+              Reset
+            </Button>
+          )}
 
           <div className="flex gap-2 w-full">
             <Button
               onClick={handleSave}
+              disabled={isBusy}
               className="flex-1 px-4 py-2 text-sm font-medium rounded-full bg-[#A6B1E1] text-[#1F1B2E] hover:bg-[#C3C8F5] transition active:scale-95 flex items-center gap-2"
             >
               <Save className="w-4 h-4" />
-              Save
+              {isSaving ? "Saving.." : "Save"}
             </Button>
             <Button
               onClick={handleDownload}

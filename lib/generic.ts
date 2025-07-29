@@ -48,9 +48,14 @@ export function shareUsingShareAPI({
     text: string;
     url: string
 }) {
-    navigator.share({
-        title: title,
-        text: text,
-        url: url
-    })
+    const isWebShareAvailable =
+        typeof navigator !== "undefined" && navigator.share;
+    if (isWebShareAvailable) {
+
+        navigator.share({
+            title: title,
+            text: text,
+            url: url
+        })
+    }
 }

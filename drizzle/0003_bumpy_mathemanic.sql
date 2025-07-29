@@ -1,0 +1,1 @@
+ALTER TABLE "tbl_quotify_records" DROP COLUMN "fullMetaData";

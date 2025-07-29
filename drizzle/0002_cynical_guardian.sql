@@ -1,0 +1,1 @@
+ALTER TABLE "tbl_quotify_records" RENAME COLUMN "imageURL" TO "imagesURL";
