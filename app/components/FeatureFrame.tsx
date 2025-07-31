@@ -1,14 +1,14 @@
 "use client";
 import { useState } from "react";
-import WelcomeText from "./features/WelcomeText";
-import MoodInput from "./features/forms/MoodInput";
-import MoodSlider from "./features/forms/MoodSlider";
-import MoodImageStyle from "./features/forms/ImageStyle";
-import MoodFilterSelect from "./features/forms/FilterSelect";
-import GenerateButton from "./features/forms/GenerateBtn";
+import WelcomeText from "./WelcomeText";
+import MoodInput from "./forms/MoodInput";
+import MoodSlider from "./forms/MoodSlider";
+import MoodImageStyle from "./forms/ImageStyle";
+import MoodFilterSelect from "./forms/FilterSelect";
+import GenerateButton from "./forms/GenerateBtn";
 import { DEFAULT_MOOD_RANGE } from "@/data/constants";
 import { FeatureState } from "@/types/shared";
-import { QuoteSelectorModal } from "./features/QuoteSelector";
+import { QuoteSelectorModal } from "./QuoteSelector";
 
 export default function FeatureFrame() {
   const [formState, setFormState] = useState<FeatureState>({

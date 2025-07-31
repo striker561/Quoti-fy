@@ -2,7 +2,6 @@ import "../styles/globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
-import HomeNavBar from "@/components/pages/home/NavBar";
 import { ThemeProvider } from "@/components/theme/provider";
 import { Toaster } from "react-hot-toast";
 
@@ -35,7 +34,6 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Toaster position="top-right" containerClassName="text-[12px]" />
-            <HomeNavBar />
             {children}
           </ThemeProvider>
         </body>

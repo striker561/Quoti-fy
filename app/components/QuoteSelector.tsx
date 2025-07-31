@@ -13,7 +13,7 @@ import {
   UseGenerateImage,
   UseQuotify,
 } from "@/hooks/generators";
-import { SkeletonCard } from "@/components/shared/preloaders/SkeletonCard";
+import { SkeletonCard } from "@/app/page/components/preloaders/SkeletonCard";
 import QuoteImage from "@/components/shared/QuoteImage";
 import {
   QuoteImageResponse,
