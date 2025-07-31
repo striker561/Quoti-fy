@@ -22,7 +22,7 @@ export function UseGenerateQuote(): QuoteResponseProps {
             try {
                 const result: APIResponse = await apiRequest({
                     method: "POST",
-                    url: "/quotes/generate",
+                    url: "/generate/quote",
                     data: form,
                 });
                 return result.data as QuoteResponse;
@@ -51,7 +51,7 @@ export function UseGenerateImage(): ImageResponseProps {
             try {
                 const result: APIResponse = await apiRequest({
                     method: "POST",
-                    url: "/images/generate",
+                    url: "/generate/image",
                     data: form,
                 });
                 return result.data as QuoteImageResponse;
@@ -80,7 +80,7 @@ export function UseQuotify(): QuotifyResponseProp {
             try {
                 const result: APIResponse = await apiRequest({
                     method: "POST",
-                    url: "/quotify",
+                    url: "/generate/quotify",
                     data: form
                 })
                 return result.data as QuotifyResponse;

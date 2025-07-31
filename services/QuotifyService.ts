@@ -1,11 +1,11 @@
 import sharp from "sharp";
-import { applyFilter } from "./filters";
-import { generateOverlaySvg } from "./overlay/generateOverlaySvg";
 import { QuotifyRequest } from "@/types/requests";
-import { analyzeImageArea } from "./overlay/analyzeImageArea";
+import { analyzeImageArea } from "@/lib/ImageProcessor/overlay/analyzeImageArea";
+import { generateOverlaySvg } from "@/lib/ImageProcessor/overlay/generateOverlaySvg";
+import { applyFilter } from "@/lib/ImageProcessor/filters";
 
 
-export async function processQuotifyRequest(data: QuotifyRequest): Promise<Buffer> {
+export async function processQuotifyRequest(data: QuotifyRequest): Promise<string> {
     const imageBuffer = Buffer.from(
         data.image.replace(/^data:image\/\w+;base64,/, ""),
         "base64"
@@ -44,5 +44,5 @@ export async function processQuotifyRequest(data: QuotifyRequest): Promise<Buffe
         .webp({ quality: 80 })
         .toBuffer();
 
-    return finalImageBuffer;
+    return `data:image/jpeg;base64,${finalImageBuffer.toString("base64")}`;
 }

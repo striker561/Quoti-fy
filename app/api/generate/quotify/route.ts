@@ -3,22 +3,21 @@ import { apiResponse, } from "@/lib/generic";
 import { QuotifyRequest } from "@/types/requests";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
-import { processQuotifyRequest } from "@/lib/ImageProcessor";
+import { processQuotifyRequest } from "@/services/QuotifyService";
 
 
 export const POST = withAuth(async (user: User, req: NextRequest) => {
     try {
         const data = (await req.json()) as QuotifyRequest;
 
-        const finalImageBuffer = await processQuotifyRequest(data);
-
-        const processedBase64 = `data:image/jpeg;base64,${finalImageBuffer.toString("base64")}`;
+        const generatedImage = await processQuotifyRequest(data);
 
         return apiResponse(200, "Quote generated", {
-            image: processedBase64,
+            image: generatedImage,
         });
     } catch (err) {
         console.error(err);
-        return apiResponse(500, "Failed to generate quote");
+        const msg = err instanceof Error ? err.message : "Something went wrong";
+        return apiResponse(500, msg);
     }
 });
