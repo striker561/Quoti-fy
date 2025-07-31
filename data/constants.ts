@@ -1,4 +1,4 @@
-import { Position } from "@/lib/backend/ImageProcessor/types";
+import { Position } from "@/lib/ImageProcessor/types";
 
 export const DEFAULT_MOOD_RANGE: number = 50;
 

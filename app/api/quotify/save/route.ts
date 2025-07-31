@@ -1,4 +1,4 @@
-import { withAuth } from "@/lib/backend/authWrapper";
+import { withAuth } from "@/lib/authWrapper";
 import { hashMetadata } from "@/lib/backend/generic";
 import { apiResponse, } from "@/lib/generic";
 import { QuotifyMetaData } from "@/types/requests";
@@ -6,7 +6,7 @@ import { User } from "next-auth";
 import { NextRequest } from "next/server";
 import { eq, and } from "drizzle-orm";
 import { quotifyEntries } from "@/db/schema/quotify";
-import getStorageService, { base64ToBuffer } from "@/lib/backend/storage/client";
+import getStorageService, { base64ToBuffer } from "@/lib/S3Storage/client";
 import { GENERATED_IMAGE_PATH, ORIGINAL_IMAGE_PATH } from "@/data/constants";
 import { randomUUID } from "crypto";
 import db from "@/db";

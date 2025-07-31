@@ -1,9 +1,9 @@
-import { withAuth } from "@/lib/backend/authWrapper";
+import { withAuth } from "@/lib/authWrapper";
 import { apiResponse, } from "@/lib/generic";
 import { QuotifyRequest } from "@/types/requests";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
-import { processQuotifyRequest } from "@/lib/backend/ImageProcessor";
+import { processQuotifyRequest } from "@/lib/ImageProcessor";
 
 
 export const POST = withAuth(async (user: User, req: NextRequest) => {

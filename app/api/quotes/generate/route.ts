@@ -1,9 +1,9 @@
-import { withAuth } from "@/lib/backend/authWrapper";
-import { getRedisClient } from "@/lib/backend/Redis/redis";
+import { withAuth } from "@/lib/authWrapper";
+import { getRedisClient } from "@/lib/Redis/redis";
 import { apiResponse, getSecondsTillMidnight, incrementQuotaWithExpiry } from "@/lib/generic";
-import { buildQuotePrompt } from "@/lib/backend/QuoteSystem/promptEngine";
-import { generateQuoteWithOpenAI } from "@/lib/backend/QuoteSystem/providers/openAIModel";
-import { getLocationByIP } from "@/lib/backend/getLocationByIP";
+import { buildQuotePrompt } from "@/lib/QuoteSystem/promptEngine";
+import { generateQuoteWithOpenAI } from "@/lib/QuoteSystem/providers/openAIModel";
+import { getLocationByIP } from "@/lib/getLocationByIP";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
 import { FeatureState, MoodPromptInput } from "@/types/shared";

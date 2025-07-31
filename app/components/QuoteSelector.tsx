@@ -12,8 +12,8 @@ import {
   UseGenerateQuote,
   UseGenerateImage,
   UseQuotify,
-} from "@/hooks/generators";
-import { SkeletonCard } from "@/app/page/components/preloaders/SkeletonCard";
+} from "@/app/components/hooks/generators";
+import { SkeletonCard } from "@/app/components/preloaders/SkeletonCard";
 import QuoteImage from "@/components/shared/QuoteImage";
 import {
   QuoteImageResponse,

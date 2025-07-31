@@ -1,9 +1,9 @@
-import { withAuth } from "@/lib/backend/authWrapper";
-import { getRedisClient } from "@/lib/backend/Redis/redis";
+import { withAuth } from "@/lib/authWrapper";
+import { getRedisClient } from "@/lib/Redis/redis";
 import { apiResponse, getSecondsTillMidnight, incrementQuotaWithExpiry } from "@/lib/generic";
-import { buildImagePrompt } from "@/lib/backend/QuoteSystem/promptEngine";
-import { generateImageWithGemini } from "@/lib/backend/QuoteSystem/providers/googleModel";
-import { getLocationByIP } from "@/lib/backend/getLocationByIP";
+import { buildImagePrompt } from "@/lib/QuoteSystem/promptEngine";
+import { generateImageWithGemini } from "@/lib/QuoteSystem/providers/googleModel";
+import { getLocationByIP } from "@/lib/getLocationByIP";
 import { getRandomImageBase64 } from "@/data/test/getRandomImage";
 import { TEST_IMAGES_FOLDER } from "@/data/test/constants";
 import { User } from "next-auth";
