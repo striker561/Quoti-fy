@@ -1,4 +1,5 @@
 import { withAuth } from "@/lib/authWrapper";
+import { isHttpError } from "@/lib/errors";
 import { apiResponse, } from "@/lib/generic";
 import { saveQuotifyData } from "@/services/SaveQuotifyService";
 import { QuotifyMetaData } from "@/types/requests";
@@ -15,10 +16,11 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
         })
 
         return apiResponse(200, "Quote saved successfully");
-    } catch (err) {
+    } catch (err: unknown) {
         console.error(err);
-        const msg = err instanceof Error ? err.message : "Something went wrong";
-        const status = msg.includes("limit") ? 429 : 500;
-        return apiResponse(status, msg);
+        if (isHttpError(err)) {
+            return apiResponse(err.status, err.message);
+        }
+        return apiResponse(500, "Something went wrong");
     }
 });

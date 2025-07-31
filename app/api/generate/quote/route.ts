@@ -3,6 +3,7 @@ import { apiResponse } from "@/lib/generic";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
 import { generateQuote } from "@/services/QuoteGenService";
+import { isHttpError } from "@/lib/errors";
 
 export const POST = withAuth(async (user: User, req: NextRequest) => {
     try {
@@ -16,10 +17,11 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
             ip,
         });
         return apiResponse(200, "Quote generated", result);
-    } catch (err) {
+    } catch (err:unknown) {
         console.error(err);
-        const msg = err instanceof Error ? err.message : "Something went wrong";
-        const status = msg.includes("limit") ? 429 : 500;
-        return apiResponse(status, msg);
+        if (isHttpError(err)) {
+            return apiResponse(err.status, err.message);
+        }
+        return apiResponse(500, "Something went wrong");
     }
 });

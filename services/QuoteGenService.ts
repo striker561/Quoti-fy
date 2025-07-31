@@ -1,4 +1,5 @@
 import { TEST_QUOTES } from "@/data/test/constants";
+import { TooManyRequestsError } from "@/lib/errors";
 import { getSecondsTillMidnight, incrementQuotaWithExpiry } from "@/lib/generic";
 import { getLocationByIP } from "@/lib/getLocationByIP";
 import { buildQuotePrompt } from "@/lib/QuoteSystem/promptEngine";
@@ -35,7 +36,7 @@ export async function generateQuote({
     if (!isTestMode && redis) {
         const used = parseInt(await redis.get(quoteKey, "0") || "0", 10);
         if (used >= QUOTE_DAILY_LIMIT) {
-            throw new Error("Quote limit reached");
+            throw new TooManyRequestsError("Quote limit reached");
         }
     }
 

@@ -1,6 +1,7 @@
 import { GENERATED_IMAGE_PATH, ORIGINAL_IMAGE_PATH } from "@/data/constants";
 import db from "@/db";
 import { quotifyEntries } from "@/db/schema/quotify";
+import { BadRequestError, InternalServerError } from "@/lib/errors";
 import { hashMetadata } from "@/lib/generic";
 import getStorageService, { base64ToBuffer } from "@/lib/S3Storage/client";
 import { QuotifyMetaData } from "@/types/requests";
@@ -32,7 +33,7 @@ export async function saveQuotifyData({
         .limit(1);
 
     if (existing.length > 0) {
-        throw new Error("Quote is already saved")
+        throw new BadRequestError("Quote is already saved")
     }
 
     // Prepare storage
@@ -56,7 +57,7 @@ export async function saveQuotifyData({
         );
     } catch (err) {
         console.error("Image upload failed:", err);
-        throw new Error("Error saving quote");
+        throw new InternalServerError("Error saving quote");
     }
 
     try {
@@ -77,7 +78,7 @@ export async function saveQuotifyData({
         });
     } catch (err) {
         console.error("DB insert failed:", err);
-        throw new Error("Error saving quote");
+        throw new InternalServerError("Error saving quote");
     }
 
     return true

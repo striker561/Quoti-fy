@@ -9,6 +9,7 @@ import { getSecondsTillMidnight, incrementQuotaWithExpiry } from "@/lib/generic"
 import { buildImagePrompt } from "@/lib/QuoteSystem/promptEngine";
 import { generateImageWithGemini } from "@/lib/QuoteSystem/providers/googleModel";
 import { QuoteImageResponse } from "@/types/responses";
+import { TooManyRequestsError } from "@/lib/errors";
 
 const IMAGE_DAILY_LIMIT = parseInt(process.env.MAX_IMAGE_PER_DAY ?? "3");
 
@@ -34,7 +35,7 @@ export async function generateImage({
     if (!isTestMode && redis) {
         const used = parseInt(await redis.get(imageKey, "0") || "0", 10);
         if (used >= IMAGE_DAILY_LIMIT) {
-            throw new Error("Image limit reached");
+            throw new TooManyRequestsError("Image limit reached");
         }
     }
 

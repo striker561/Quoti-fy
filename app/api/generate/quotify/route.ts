@@ -4,6 +4,7 @@ import { QuotifyRequest } from "@/types/requests";
 import { User } from "next-auth";
 import { NextRequest } from "next/server";
 import { processQuotifyRequest } from "@/services/QuotifyService";
+import { isHttpError } from "@/lib/errors";
 
 
 export const POST = withAuth(async (user: User, req: NextRequest) => {
@@ -15,9 +16,11 @@ export const POST = withAuth(async (user: User, req: NextRequest) => {
         return apiResponse(200, "Quote generated", {
             image: generatedImage,
         });
-    } catch (err) {
+    } catch (err: unknown) {
         console.error(err);
-        const msg = err instanceof Error ? err.message : "Something went wrong";
-        return apiResponse(500, msg);
+        if (isHttpError(err)) {
+            return apiResponse(err.status, err.message);
+        }
+        return apiResponse(500, "Something went wrong");
     }
 });
