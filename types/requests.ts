@@ -1,4 +1,4 @@
-import { FeatureState } from "./shared";
+import { QuoteReqData } from "./shared";
 
 export type QuotifyRequest = {
     image: string;
@@ -6,8 +6,8 @@ export type QuotifyRequest = {
     filter: string
 };
 
-export type QuotifyMetaData = {
+export type QuotifyMetaDataRequest = {
     generatedImage: string,
-    promptData: FeatureState,
+    promptData: QuoteReqData,
     quotifyReq: QuotifyRequest,
 }

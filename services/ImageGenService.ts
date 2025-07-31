@@ -1,7 +1,7 @@
 import { getRandomImageBase64 } from "@/data/test/getRandomImage";
 import { getLocationByIP } from "@/lib/getLocationByIP";
 import { getRedisClient } from "@/lib/Redis/redis";
-import { FeatureState, MoodPromptInput } from "@/types/shared";
+import { QuoteReqData, QuotePromptData } from "@/types/shared";
 import { User } from "next-auth";
 
 import { TEST_IMAGES_FOLDER } from "@/data/test/constants";
@@ -15,7 +15,7 @@ const IMAGE_DAILY_LIMIT = parseInt(process.env.MAX_IMAGE_PER_DAY ?? "3");
 
 interface GenerateImageInput {
     user: User;
-    data: FeatureState;
+    data: QuoteReqData;
     ip?: string;
 }
 
@@ -44,7 +44,7 @@ export async function generateImage({
         ? `${locationData.city}, ${locationData.country}`
         : "Unspecified";
 
-    const prompt: MoodPromptInput = {
+    const prompt: QuotePromptData = {
         mood: data.mood,
         moodScale: data.moodRange,
         imageStyle: data.moodImageStyle,

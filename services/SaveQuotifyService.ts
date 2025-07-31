@@ -4,14 +4,14 @@ import { quotifyEntries } from "@/db/schema/quotify";
 import { BadRequestError, InternalServerError } from "@/lib/errors";
 import { hashMetadata } from "@/lib/generic";
 import getStorageService, { base64ToBuffer } from "@/lib/S3Storage/client";
-import { QuotifyMetaData } from "@/types/requests";
+import { QuotifyMetaDataRequest } from "@/types/requests";
 import { randomUUID } from "crypto";
 import { and, eq } from "drizzle-orm";
 import { User } from "next-auth";
 
 interface SaveQuoteInput {
     user: User;
-    data: QuotifyMetaData;
+    data: QuotifyMetaDataRequest;
 }
 
 export async function saveQuotifyData({

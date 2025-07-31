@@ -1,14 +1,14 @@
 import { QuotifyRequest } from "./requests";
 import { QuoteImageResponse, QuoteResponse, QuotifyResponse } from "./responses";
 
-export type FeatureState = {
+export type QuoteReqData = {
     mood: string;
     moodRange: number;
     moodImageStyle: string;
     moodFilter: string;
 };
 
-export interface MoodPromptInput {
+export interface QuotePromptData {
     mood: string;
     moodScale: number;
     imageStyle: string;
@@ -19,13 +19,13 @@ export interface MoodPromptInput {
 
 
 export type QuoteResponseProps = {
-    generate: (form: FeatureState) => Promise<QuoteResponse>;
+    generate: (form: QuoteReqData) => Promise<QuoteResponse>;
     isGenerating: boolean;
     error: string | null;
 };
 
 export type ImageResponseProps = {
-    generate: (form: FeatureState) => Promise<QuoteImageResponse>;
+    generate: (form: QuoteReqData) => Promise<QuoteImageResponse>;
     isGenerating: boolean;
     error: string | null;
 };

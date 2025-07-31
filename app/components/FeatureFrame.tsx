@@ -7,11 +7,11 @@ import MoodImageStyle from "./forms/ImageStyle";
 import MoodFilterSelect from "./forms/FilterSelect";
 import GenerateButton from "./forms/GenerateBtn";
 import { DEFAULT_MOOD_RANGE } from "@/data/constants";
-import { FeatureState } from "@/types/shared";
+import { QuoteReqData } from "@/types/shared";
 import { QuoteSelectorModal } from "./QuoteSelector";
 
 export default function FeatureFrame() {
-  const [formState, setFormState] = useState<FeatureState>({
+  const [formState, setFormState] = useState<QuoteReqData>({
     mood: "",
     moodRange: DEFAULT_MOOD_RANGE,
     moodImageStyle: "",

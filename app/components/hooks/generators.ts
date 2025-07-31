@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { apiRequest } from "@/lib/apiRequest";
 import {
-    FeatureState,
+    QuoteReqData,
     ImageResponseProps,
     QuoteResponseProps,
     QuotifyResponseProp,
@@ -16,7 +16,7 @@ export function UseGenerateQuote(): QuoteResponseProps {
     const [error, setError] = useState<string | null>(null);
 
     const generateQuote = useCallback(
-        async (form: FeatureState): Promise<QuoteResponse> => {
+        async (form: QuoteReqData): Promise<QuoteResponse> => {
             setIsGenerating(true);
             setError(null);
             try {
@@ -45,7 +45,7 @@ export function UseGenerateImage(): ImageResponseProps {
     const [error, setError] = useState<string | null>(null);
 
     const generateImage = useCallback(
-        async (form: FeatureState): Promise<QuoteImageResponse> => {
+        async (form: QuoteReqData): Promise<QuoteImageResponse> => {
             setIsGenerating(true);
             setError(null);
             try {

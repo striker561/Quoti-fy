@@ -3,19 +3,19 @@ export type APIResponse = {
     data: [] | object | null;
 };
 
-export type Quota = {
+export type UsageQuotaResponse = {
     current: number | null;
     max: number;
 }
 
 export type QuoteImageResponse = {
     image: string | null;
-    quota: Quota;
+    quota: UsageQuotaResponse;
 }
 
 export type QuoteResponse = {
     quotes: string[] | null;
-    quota: Quota;
+    quota: UsageQuotaResponse;
 }
 
 export type QuotifyResponse = {

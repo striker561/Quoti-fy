@@ -6,7 +6,7 @@ import { buildQuotePrompt } from "@/lib/QuoteSystem/promptEngine";
 import { generateQuoteWithOpenAI } from "@/lib/QuoteSystem/providers/openAIModel";
 import { getRedisClient } from "@/lib/Redis/redis";
 import { QuoteResponse } from "@/types/responses";
-import { FeatureState, MoodPromptInput } from "@/types/shared";
+import { QuoteReqData, QuotePromptData } from "@/types/shared";
 import { User } from "next-auth";
 
 
@@ -15,7 +15,7 @@ const QUOTE_PER_REQ = parseInt(process.env.QUOTE_PER_REQUEST ?? "2");
 
 interface GenerateQuoteInput {
     user: User;
-    data: FeatureState;
+    data: QuoteReqData;
     ip?: string;
 }
 
@@ -45,7 +45,7 @@ export async function generateQuote({
         ? `${locationData.city}, ${locationData.country}`
         : "Unspecified";
 
-    const prompt: MoodPromptInput = {
+    const prompt: QuotePromptData = {
         mood: data.mood,
         moodScale: data.moodRange,
         imageStyle: data.moodImageStyle,

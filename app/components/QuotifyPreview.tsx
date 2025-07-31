@@ -8,14 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Download, Save } from "lucide-react";
 import { useState } from "react";
 import { shareUsingShareAPI, toastFailure, toastSuccess } from "@/lib/generic";
-import { QuotifyMetaData } from "@/types/requests";
+import { QuotifyMetaDataRequest } from "@/types/requests";
 import { APIResponse } from "@/types/responses";
 import { apiRequest } from "@/lib/apiRequest";
 
 interface QuotifyPreviewProp {
   image: string;
   onReset: () => void;
-  metadata: QuotifyMetaData;
+  metadata: QuotifyMetaDataRequest;
 }
 
 export default function QuotifyPreview({

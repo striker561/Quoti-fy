@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getRedisClient } from "./Redis/redis";
 import toast from "react-hot-toast"
-import { QuotifyMetaData } from "@/types/requests";
+import { QuotifyMetaDataRequest } from "@/types/requests";
 import crypto from "crypto";
 
 
@@ -63,7 +63,7 @@ export function shareUsingShareAPI({
     }
 }
 
-export function hashMetadata(metaData: QuotifyMetaData): string {
+export function hashMetadata(metaData: QuotifyMetaDataRequest): string {
     const raw = JSON.stringify(metaData);
     return crypto.createHash("sha256").update(raw).digest("hex");
 }

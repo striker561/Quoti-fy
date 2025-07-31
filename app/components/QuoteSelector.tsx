@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { FeatureState, ModalInteractionProps } from "@/types/shared";
+import { QuoteReqData, ModalInteractionProps } from "@/types/shared";
 import {
   UseGenerateQuote,
   UseGenerateImage,
@@ -29,7 +29,7 @@ export function QuoteSelectorModal({
   moodFormData,
 }: {
   interaction: ModalInteractionProps;
-  moodFormData: FeatureState;
+  moodFormData: QuoteReqData;
 }) {
   // --- Hooks ---
   const { generate: generateQuote, isGenerating: isGeneratingQuote } =
