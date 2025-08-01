@@ -4,6 +4,8 @@ import { Poppins } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme/provider";
 import { Toaster } from "react-hot-toast";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { HistorySidebar } from "./components/SideBar";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -34,7 +36,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Toaster position="top-right" containerClassName="text-[12px]" />
-            {children}
+            <SidebarProvider>
+              <HistorySidebar />
+              {children}
+            </SidebarProvider>
           </ThemeProvider>
         </body>
       </html>

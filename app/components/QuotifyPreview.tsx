@@ -56,7 +56,7 @@ export default function QuotifyPreview({
     try {
       const result: APIResponse = await apiRequest({
         method: "POST",
-        url: "/quotify/save",
+        url: "/quotify",
         data: metadata,
       });
       toastSuccess(result.message);

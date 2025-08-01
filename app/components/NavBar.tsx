@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { AppWindow, Loader2, UserRound } from "lucide-react";
+import { Loader2, UserRound } from "lucide-react";
 import { ModeToggle } from "@/components/theme/ThemeToggle";
 import {
   DropdownMenu,
@@ -8,9 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import { AuthModal } from "@/components/shared/modals/AuthModal";
 import { signOut, useSession } from "next-auth/react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function HomeNavBar() {
   const { data: session, status } = useSession();
@@ -24,12 +24,7 @@ export default function HomeNavBar() {
   return (
     <nav className="flex items-center justify-between p-4">
       <div className="flex items-center gap-4 w-[7rem]">
-        <Button
-          className="drop-shadow-xl cursor-pointer flex items-center"
-          size="icon"
-        >
-          <AppWindow />
-        </Button>
+        <SidebarTrigger />
         <span className="flex items-center">
           <ModeToggle />
         </span>

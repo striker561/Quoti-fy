@@ -4,9 +4,9 @@ import FeatureFrame from "@/app/components/FeatureFrame";
 
 export default function Home() {
   return (
-    <>
+    <main className="w-full">
       <HomeNavBar />
       <FeatureFrame />
-    </>
+    </main>
   );
 }
