@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme/provider";
 import { Toaster } from "react-hot-toast";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { HistorySidebar } from "./components/SideBar";
+import SessionSyncer from "@/components/shared/SessionSyncer";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,6 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <SessionProvider>
+      <SessionSyncer />
       <html lang="en" suppressHydrationWarning>
         <body className={`${poppins.className} antialiased`}>
           <ThemeProvider

@@ -1,16 +1,16 @@
 "use client";
 import { useState } from "react";
-import WelcomeText from "./WelcomeText";
-import MoodInput from "./forms/MoodInput";
-import MoodSlider from "./forms/MoodSlider";
-import MoodImageStyle from "./forms/ImageStyle";
-import MoodFilterSelect from "./forms/FilterSelect";
-import GenerateButton from "./forms/GenerateBtn";
+import WelcomeText from "../WelcomeText";
+import MoodInput from "./MoodInput";
+import MoodSlider from "./MoodSlider";
+import MoodImageStyle from "./ImageStyle";
+import MoodFilterSelect from "./FilterSelect";
+import GenerateButton from "./GenerateBtn";
 import { DEFAULT_MOOD_RANGE } from "@/data/constants";
 import { QuoteReqData } from "@/types/shared";
-import { QuoteSelectorModal } from "./QuoteSelector";
+import { QuotifyModal } from "../quotes/QuotifyModal";
 
-export default function FeatureFrame() {
+export default function MoodForm() {
   const [formState, setFormState] = useState<QuoteReqData>({
     mood: "",
     moodRange: DEFAULT_MOOD_RANGE,
@@ -54,12 +54,12 @@ export default function FeatureFrame() {
           }}
         />
         {modalOpen && (
-          <QuoteSelectorModal
+          <QuotifyModal
             interaction={{
               open: modalOpen,
               onOpenChange: setModalOpen,
             }}
-            moodFormData={formState}
+            quoteFormData={formState}
           />
         )}
       </div>

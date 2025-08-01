@@ -1,12 +1,12 @@
 import "@/styles/slider.css";
 import HomeNavBar from "@/app/components/NavBar";
-import FeatureFrame from "@/app/components/FeatureFrame";
+import MoodForm from "@/app/components/forms/MoodForm";
 
 export default function Home() {
   return (
     <main className="w-full">
       <HomeNavBar />
-      <FeatureFrame />
+      <MoodForm />
     </main>
   );
 }

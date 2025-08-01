@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Loader2, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import { ModeToggle } from "@/components/theme/ThemeToggle";
 import {
   DropdownMenu,
@@ -9,16 +9,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AuthModal } from "@/components/shared/modals/AuthModal";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import useAuthStore from "@/stores/auth/useAuthStore";
 
 export default function HomeNavBar() {
-  const { data: session, status } = useSession();
-  const currentUser = session?.user;
-  const isLoading = status == "loading";
+  const { user, isAuthenticated, logout } = useAuthStore();
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    logout();
   };
 
   return (
@@ -31,52 +31,43 @@ export default function HomeNavBar() {
       </div>
 
       <div className="flex items-center gap-2">
-        {!isLoading ? (
-          <>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild disabled={!currentUser}>
-                {currentUser ? (
-                  currentUser.image ? (
-                    <div className="max-w-[44px] overflow-hidden">
-                      <Image
-                        src={currentUser.image}
-                        alt={
-                          currentUser.name
-                            ? `${currentUser.name}'s profile picture`
-                            : "Default profile icon"
-                        }
-                        className="p-1 rounded-full border-2 border-solid border-[#6320EE] flex items-center justify-center cursor-pointer drop-shadow-xl w-9 h-9 object-cover"
-                        width={36}
-                        height={36}
-                      />
-                    </div>
-                  ) : (
-                    <div className="border-2 rounded-full p-1 border-[#6320EE]">
-                      <UserRound />
-                    </div>
-                  )
-                ) : (
-                  <div className="border-2 rounded-full p-1 border-[#A6B1E1]">
-                    <UserRound />
-                  </div>
-                )}
-              </DropdownMenuTrigger>
-              {currentUser && (
-                <DropdownMenuContent align="center">
-                  <DropdownMenuItem
-                    variant="destructive"
-                    onClick={handleSignOut}
-                  >
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              )}
-            </DropdownMenu>
-            {!currentUser && <AuthModal />}
-          </>
-        ) : (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        )}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild disabled={!isAuthenticated}>
+            {isAuthenticated && user ? (
+              user.image ? (
+                <div className="max-w-[44px] overflow-hidden">
+                  <Image
+                    src={user.image}
+                    alt={
+                      user.name
+                        ? `${user.name}'s profile picture`
+                        : "Default profile icon"
+                    }
+                    className="p-1 rounded-full border-2 border-solid border-[#6320EE] flex items-center justify-center cursor-pointer drop-shadow-xl w-9 h-9 object-cover"
+                    width={36}
+                    height={36}
+                  />
+                </div>
+              ) : (
+                <div className="border-2 rounded-full p-1 border-[#6320EE]">
+                  <UserRound />
+                </div>
+              )
+            ) : (
+              <div className="border-2 rounded-full p-1 border-[#A6B1E1]">
+                <UserRound />
+              </div>
+            )}
+          </DropdownMenuTrigger>
+          {user && (
+            <DropdownMenuContent align="center">
+              <DropdownMenuItem variant="destructive" onClick={handleSignOut}>
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          )}
+        </DropdownMenu>
+        {!user && <AuthModal />}
       </div>
     </nav>
   );

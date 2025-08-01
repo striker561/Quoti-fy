@@ -18,7 +18,7 @@ interface QuotifyPreviewProp {
   metadata: QuotifyMetaDataRequest;
 }
 
-export default function QuotifyPreview({
+export default function QuotePreview({
   image,
   onReset,
   metadata,

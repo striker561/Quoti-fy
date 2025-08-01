@@ -11,37 +11,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { startSignIn } from "@/lib/auth";
 import { Loader2 } from "lucide-react";
+import useAuthStore from "@/stores/auth/useAuthStore";
+import { signIn } from "next-auth/react";
 
 export function AuthModal() {
-  const [isLoading, setIsLoading] = useState<{
-    google: boolean;
-    github: boolean;
-  }>({
-    google: false,
-    github: false,
-  });
+  const { isLoading, startLoading, stopLoading } = useAuthStore();
   const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async (provider: "google" | "github") => {
-    setError(null);
-    setIsLoading((prev: { google: boolean; github: boolean }) => ({
-      ...prev,
-      [provider]: true,
-    }));
-
     try {
-      const authUrl = await startSignIn(provider);
-      window.location.assign(authUrl);
-    } catch (err: unknown) {
+      setError(null);
+      startLoading();
+
+      await signIn(provider, {
+        callbackUrl: "/",
+      });
+    } catch (err) {
       console.error("Login error:", err);
-      setError("Something went wrong trying to sign ");
-    } finally {
-      setIsLoading((prev: { google: boolean; github: boolean }) => ({
-        ...prev,
-        [provider]: false,
-      }));
+      setError("Something went wrong trying to sign in.");
+      stopLoading();
     }
   };
 
@@ -72,9 +61,9 @@ export function AuthModal() {
               type="button"
               className="w-full cursor-pointer flex items-center justify-center"
               onClick={() => handleLogin("github")}
-              disabled={isLoading.github}
+              disabled={isLoading}
             >
-              {isLoading.github ? (
+              {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Signing in...
@@ -89,9 +78,9 @@ export function AuthModal() {
               variant="outline"
               className="w-full cursor-pointer flex items-center justify-center"
               onClick={() => handleLogin("google")}
-              disabled={isLoading.google}
+              disabled={isLoading}
             >
-              {isLoading.google ? (
+              {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Signing in...
