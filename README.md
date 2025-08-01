@@ -25,7 +25,7 @@
 | Frontend                   | Next.js 14 (App Router) + TypeScript       |
 | Styling                    | TailwindCSS (with dark mode + shadcn/ui)   |
 | State                      | React Hooks (`useState`, `useEffect`)      |
-| Forms/Validation (Planned) | Zod (`v3`) for schema validatio            |
+| Forms/Validation (Planned) | Zod (`v3`) for schema validation            |
 | Auth                       | NextAuth (Google & GitHub)                 |
 | Storage (Planned)          | Cloud storage bucket (for rendered images) |
 | Rate-Limiting              | Redis (for authenticated users)            |
@@ -72,7 +72,9 @@ bun dev
 
 - 🧪 Zod input validation for image/quote endpoints
 
-- 🔄️ Retrieval of user uploaded images through quote
+- 🔄️ Retrieval of user uploaded images through quote, history and deletion
+
+- 🚀 Optimization of the frontend and use of contexts, react queries and other technologies to make the front end neater and secure (Frontend is hard 😭)
 
 - 📝 Privacy policy announcement and cookie declaration with link to the github repo
 
