@@ -123,25 +123,30 @@ export function QuotifyModal({
                     </DialogHeader>
                 ) : isBusy ? (
                     <>
+                        {/* --- Loading State --- */}
                         <DialogTitle className="sr-only">Generating Content</DialogTitle>
                         <SkeletonCard />
                     </>
                 ) : quotifyResult ? (
-                    <QuotePreview
-                        image={quotifyResult.image as string}
-                        onReset={() => setQuotifyResult(null)}
-                        metadata={{
-                            generatedImage: quotifyResult.image,
-                            promptData: quoteFormData,
-                            quotifyReq: {
-                                image: imageResult?.image as string,
-                                quote: quoteResult?.quotes?.[activeQuoteIndex] as string,
-                                filter: quoteFormData.moodFilter,
-                            },
-                        }}
-                    />
+                    <>
+                        {/* --- Quote + Image Preview State --- */}
+                        <QuotePreview
+                            image={quotifyResult.image as string}
+                            onReset={() => setQuotifyResult(null)}
+                            metadata={{
+                                generatedImage: quotifyResult.image,
+                                promptData: quoteFormData,
+                                quotifyReq: {
+                                    image: imageResult?.image as string,
+                                    quote: quoteResult?.quotes?.[activeQuoteIndex] as string,
+                                    filter: quoteFormData.moodFilter,
+                                },
+                            }}
+                        />
+                    </>
                 ) : (
                     <>
+                        {/* --- Default State --- */}
                         <DialogHeader>
                             <DialogTitle className="text-center">
                                 {quoteResult ? "Quote Preview" : "Ready to generate?"}

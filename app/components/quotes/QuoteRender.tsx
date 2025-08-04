@@ -32,6 +32,14 @@ export default function QuoteRenderer({
         [setActiveQuoteIndex]
     );
 
+    const handleShare = () => {
+        shareUsingShareAPI({
+            title: "Quoti-Fy",
+            text: currentQuote,
+            url: window.location.href,
+        })
+    }
+
     return (
         <div className="space-y-5">
             <QuoteSlider
@@ -51,11 +59,11 @@ export default function QuoteRenderer({
                 disabled={isGeneratingQuote}
                 variant="ghost"
                 className="
-          px-4 py-2 text-sm font-medium rounded-full
-          backdrop-blur-md bg-[#6320EE]/50 text-white
-          border border-white/20 shadow-md
-          transition hover:bg-[#A6B1E1]/40 active:scale-95
-          w-full cursor-pointer"
+                    px-4 py-2 text-sm font-medium rounded-full
+                    backdrop-blur-md bg-[#6320EE]/50 text-white
+                    border border-white/20 shadow-md
+                    transition hover:bg-[#A6B1E1]/40 active:scale-95
+                    w-full cursor-pointer"
             >
                 {isGeneratingQuote
                     ? "Generating..."
@@ -79,13 +87,7 @@ export default function QuoteRenderer({
                             {isWebShareAvailable && (
                                 <Button
                                     variant="ghost"
-                                    onClick={() =>
-                                        shareUsingShareAPI({
-                                            title: "Quoti-Fy",
-                                            text: currentQuote,
-                                            url: window.location.href,
-                                        })
-                                    }
+                                    onClick={handleShare}
                                     className="w-full text-xs"
                                 >
                                     📤 Share Quote

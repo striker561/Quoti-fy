@@ -40,3 +40,16 @@ export type ModalInteractionProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };
+
+
+export type QuoteRecord = {
+    id: string;
+    quote: string;
+    dateCreated: string;
+};
+
+
+export type RecordGroupedByDay = {
+    date: string;
+    record: QuoteRecord[];
+};
