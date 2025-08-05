@@ -24,7 +24,7 @@ export async function getQuotifiesData({ user }: { user: User }) {
         const date = format(new Date(entry.createdAt), "yyyy-MM-dd");
         if (!grouped[date]) grouped[date] = [];
         grouped[date].push({
-            id: String(entry.id),
+            id: entry.id,
             quote: entry.quote,
             dateCreated: entry.createdAt instanceof Date ? entry.createdAt.toISOString() : String(entry.createdAt),
         });

@@ -21,3 +21,12 @@ export type QuoteResponse = {
 export type QuotifyResponse = {
     image: string;
 }
+
+export type HistoryResponse = {
+    id: number;
+    quote: string;
+    imageURL: object | null;
+    promptData: object | null;
+    quotifyReq: object | null;
+    dateCreated: Date;
+};

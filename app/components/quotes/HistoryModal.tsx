@@ -4,12 +4,13 @@ import useHistoryModalStore from "@/stores/modal/useHistoryModalStore";
 import { UseGetHistory } from "../hooks/generators";
 import { useCallback, useEffect, useState } from "react";
 import { HistorySkeleton } from "../preloaders/HistorySkeleton";
+import { HistoryResponse } from "@/types/responses";
 
 export default function HistoryModal() {
     const { open, selectedId, closeModal } = useHistoryModalStore();
     const { history: getHistory, isLoading } = UseGetHistory()
     const [error, setError] = useState<Error | null>(null)
-    const [result, setResult] = useState<unknown | null>(null)
+    const [result, setResult] = useState<HistoryResponse | null>(null)
 
     // --- Handlers ---
     const handleModalClose = () => {
@@ -21,10 +22,12 @@ export default function HistoryModal() {
     const handleLoadHistory = useCallback(() => {
         setError(null);
         console.log(selectedId)
-        getHistory(selectedId as number).then(setResult).catch((err) => {
-            console.error(err);
-            setError(err);
-        });
+        getHistory(selectedId as number)
+            .then((res) => setResult(res as HistoryResponse))
+            .catch((err) => {
+                console.error(err);
+                setError(err);
+            });
     }, [getHistory, selectedId])
 
     useEffect(() => {
