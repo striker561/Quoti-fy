@@ -5,6 +5,7 @@ import {
     ImageResponseProps,
     QuoteResponseProps,
     QuotifyResponseProp,
+    HistoryResponseProp,
 } from "@/types/shared";
 import { APIResponse, QuoteImageResponse, QuoteResponse, QuotifyResponse } from "@/types/responses";
 import { QuotifyRequest } from "@/types/requests";
@@ -95,4 +96,35 @@ export function UseQuotify(): QuotifyResponseProp {
     );
 
     return { quotify: quotifyImage, isLoading, error }
+}
+
+
+export function UseGetHistory(): HistoryResponseProp {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const getHistory = useCallback(
+        async (id: number) => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                const result: APIResponse = await apiRequest({
+                    method: "GET",
+                    url: "/quotify",
+                    data: {
+                        id: id
+                    }
+                })
+                return result.data;
+            } catch (error: unknown) {
+                if (error instanceof Error) throw error;
+                throw new Error("An unknown error occurred");
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        []
+    );
+
+    return { history: getHistory, isLoading, error }
 }

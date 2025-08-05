@@ -18,13 +18,10 @@ import {
 import { Loader2 } from "lucide-react";
 import { AuthModal } from "@/components/shared/modals/AuthModal";
 import useAuthStore from "@/stores/auth/useAuthStore";
-import { QuoteRecord, RecordGroupedByDay } from "@/types/shared";
+import { RecordGroupedByDay } from "@/types/shared";
+import useHistoryModalStore from "@/stores/modal/useHistoryModalStore";
 
-interface QuoteHistorySidebarProps {
-    onSelect?: (entry: QuoteRecord) => void;
-}
-
-export function HistorySidebar({ onSelect }: QuoteHistorySidebarProps) {
+export function HistorySidebar() {
     const { isAuthenticated } = useAuthStore();
 
     const [groupedQuotes, setGroupedQuotes] = useState<RecordGroupedByDay[]>([]);
@@ -105,7 +102,7 @@ export function HistorySidebar({ onSelect }: QuoteHistorySidebarProps) {
                                                 variant="ghost"
                                                 className="justify-start text-left text-sm w-full px-2 py-2 rounded hover:bg-accent hover:text-accent-foreground transition"
                                                 onClick={() => {
-                                                    if (onSelect) onSelect(entry);
+                                                    useHistoryModalStore.getState().openModal(entry.id);
                                                 }}
                                             >
                                                 <span className="mr-2 text-muted-foreground">🕓</span>

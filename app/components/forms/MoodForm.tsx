@@ -26,7 +26,7 @@ export default function MoodForm() {
     formState.moodFilter.trim() !== "";
 
   return (
-    <div className="my-20 @container">
+    <div className="my-20">
       <div className="mx-4 md:mx-[15rem] lg:mx-[15rem]">
         <WelcomeText />
         <MoodInput

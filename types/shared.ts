@@ -36,6 +36,12 @@ export type QuotifyResponseProp = {
     error: string | null;
 }
 
+export type HistoryResponseProp = {
+    history: (id: number) => Promise<unknown>;
+    isLoading: boolean;
+    error: string | null;
+}
+
 export type ModalInteractionProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -43,7 +49,7 @@ export type ModalInteractionProps = {
 
 
 export type QuoteRecord = {
-    id: string;
+    id: number;
     quote: string;
     dateCreated: string;
 };

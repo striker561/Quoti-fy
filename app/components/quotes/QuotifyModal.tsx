@@ -4,7 +4,7 @@ import {
     UseGenerateQuote,
     UseQuotify,
 } from "@/app/components/hooks/generators";
-import { SkeletonCard } from "@/app/components/preloaders/SkeletonCard";
+import { QuotifySkeleton } from "@/app/components/preloaders/QuotifySkeleton";
 import QuoteImage from "@/components/shared/QuoteImage";
 import {
     Dialog,
@@ -125,7 +125,7 @@ export function QuotifyModal({
                     <>
                         {/* --- Loading State --- */}
                         <DialogTitle className="sr-only">Generating Content</DialogTitle>
-                        <SkeletonCard />
+                        <QuotifySkeleton />
                     </>
                 ) : quotifyResult ? (
                     <>
