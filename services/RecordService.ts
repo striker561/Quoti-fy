@@ -1,6 +1,8 @@
 import db from "@/db";
 import { quotifyEntries } from "@/db/schema/quotify";
+import { ImageURLDataRequest, QuotifyRequest } from "@/types/requests";
 import { HistoryResponse } from "@/types/responses";
+import { QuoteReqData } from "@/types/shared";
 import { and, eq } from "drizzle-orm";
 import { User } from "next-auth";
 
@@ -32,9 +34,9 @@ export async function getQuoteRecordByID({ id, user }: { id: number, user: User 
     return {
         id: entry.id,
         quote: entry.quote,
-        imageURL: entry.imageURL as object,
-        promptData: entry.promptData as object,
-        quotifyReq: entry.quotifyReq as object,
+        imageURL: entry.imageURL as ImageURLDataRequest,
+        promptData: entry.promptData as QuoteReqData,
+        quotifyReq: entry.quotifyReq as QuotifyRequest,
         dateCreated: entry.dateCreated
     };
 }
