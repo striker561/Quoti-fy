@@ -46,14 +46,12 @@ export async function saveQuotifyData({
             `${userID}/${ORIGINAL_IMAGE_PATH}/${randomUUID()}`,
             base64ToBuffer(data.quotifyReq.image),
             "image/png",
-            "public-read"
         );
 
         generatedImageURL = await storage.upload(
             `${userID}/${GENERATED_IMAGE_PATH}/${randomUUID()}`,
-            base64ToBuffer(data.quotifyReq.image),
+            base64ToBuffer(data.generatedImage),
             "image/png",
-            "public-read"
         );
     } catch (err) {
         console.error("Image upload failed:", err);

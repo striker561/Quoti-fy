@@ -38,7 +38,7 @@ export class StorageService {
             ContentType: contentType,
             ACL: access_level,
         }));
-        return `${this.endpoint}/${this.bucket}/${key}`;
+        return `${key}`;
     }
 
     async deleteByUrl(url: string) {

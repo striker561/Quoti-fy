@@ -6,6 +6,11 @@ export type QuotifyRequest = {
     filter: string
 };
 
+export type ImageURLDataRequest = {
+  original: string;
+  generated: string;
+};
+
 export type QuotifyMetaDataRequest = {
     generatedImage: string,
     promptData: QuoteReqData,

@@ -1,3 +1,6 @@
+import { ImageURLDataRequest, QuotifyRequest } from "./requests";
+import { QuoteReqData } from "./shared";
+
 export type APIResponse = {
     message: string;
     data: [] | object | null;
@@ -25,8 +28,8 @@ export type QuotifyResponse = {
 export type HistoryResponse = {
     id: number;
     quote: string;
-    imageURL: object | null;
-    promptData: object | null;
-    quotifyReq: object | null;
+    imageURL: ImageURLDataRequest;
+    promptData: QuoteReqData;
+    quotifyReq: QuotifyRequest;
     dateCreated: Date;
 };
