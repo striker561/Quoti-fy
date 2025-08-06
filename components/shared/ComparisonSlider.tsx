@@ -68,7 +68,7 @@ export default function ImageComparisonSlider({
                     src={after}
                     alt="After"
                     fill
-                    className="object-cover"
+                    className="object-cover h-auto rounded-xl"
                     onLoadingComplete={() => setLoadedAfter(true)}
                 />
             </div>
@@ -85,7 +85,7 @@ export default function ImageComparisonSlider({
                     src={before}
                     alt="Before"
                     fill
-                    className="object-cover"
+                    className="object-cover h-auto rounded-xl"
                     onLoadingComplete={() => setLoadedBefore(true)}
                 />
             </div>

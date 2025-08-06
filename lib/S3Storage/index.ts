@@ -41,8 +41,7 @@ export class StorageService {
         return `${key}`;
     }
 
-    async deleteByUrl(url: string) {
-        const key = url.split(`${this.bucket}/`)[1];
+    async deleteByKey(key: string) {
         if (!key) throw new Error("Invalid file URL");
         await this.s3.send(new DeleteObjectCommand({
             Bucket: this.bucket,

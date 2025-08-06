@@ -11,6 +11,8 @@ import { downloadImage, shareUsingShareAPI, toastFailure, toastSuccess } from "@
 import { QuotifyMetaDataRequest } from "@/types/requests";
 import { APIResponse } from "@/types/responses";
 import { apiRequest } from "@/lib/apiRequest";
+import useHistoryStore from "@/stores/records/useHistoryStore";
+import { QuoteRecord } from "@/types/shared";
 
 interface QuotifyPreviewProp {
     image: string;
@@ -23,6 +25,7 @@ export default function QuotePreview({
     onReset,
     metadata,
 }: QuotifyPreviewProp) {
+    const { addHistory } = useHistoryStore()
     const [isDownloading, setIsDownloading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -47,6 +50,7 @@ export default function QuotePreview({
                 data: metadata,
             });
             toastSuccess(result.message);
+            addHistory(result.data as QuoteRecord)
             shareUsingShareAPI({
                 title: "Quoti-Fy",
                 text: metadata.quotifyReq.quote,

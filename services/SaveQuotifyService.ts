@@ -5,6 +5,7 @@ import { BadRequestError, InternalServerError } from "@/lib/errors";
 import { hashMetadata } from "@/lib/generic";
 import getStorageService, { base64ToBuffer } from "@/lib/S3Storage/client";
 import { QuotifyMetaDataRequest } from "@/types/requests";
+import { QuoteRecord } from "@/types/shared";
 import { randomUUID } from "crypto";
 import { and, eq } from "drizzle-orm";
 import { User } from "next-auth";
@@ -17,7 +18,7 @@ interface SaveQuoteInput {
 export async function saveQuotifyData({
     user,
     data,
-}: SaveQuoteInput): Promise<boolean> {
+}: SaveQuoteInput): Promise<QuoteRecord> {
     const userID = user.id as string;
 
     const metaHash = hashMetadata(data);
@@ -59,7 +60,7 @@ export async function saveQuotifyData({
     }
 
     try {
-        await db.insert(quotifyEntries).values({
+        const save = await db.insert(quotifyEntries).values({
             userId: userID,
             quote: data.quotifyReq.quote,
             imageURL: {
@@ -73,11 +74,22 @@ export async function saveQuotifyData({
                 image: "REDACTED",
             },
             metaHash,
-        });
+        }).returning({ id: quotifyEntries.id, dateCreated: quotifyEntries.dateCreated });
+
+
+        if (!save || save.length === 0) {
+            throw new InternalServerError("Insert succeeded but no ID returned");
+        }
+
+        return {
+            id: save[0].id,
+            quote: data.quotifyReq.quote,
+            dateCreated: save[0].dateCreated.toISOString(),
+        }
+
     } catch (err) {
         console.error("DB insert failed:", err);
         throw new InternalServerError("Error saving quote");
     }
 
-    return true
 }

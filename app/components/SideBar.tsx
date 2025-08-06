@@ -1,11 +1,4 @@
 "use client";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { apiRequest } from "@/lib/apiRequest";
@@ -14,19 +7,31 @@ import {
     Sidebar,
     SidebarContent,
     SidebarHeader,
+    SidebarGroup,
+    SidebarMenu,
+    SidebarMenuItem,
+    SidebarMenuButton,
+    SidebarMenuAction,
+    SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Loader2 } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, ChevronRight, ChevronUp, Loader2, Quote, Trash, User2 } from "lucide-react";
 import { AuthModal } from "@/components/shared/modals/AuthModal";
 import useAuthStore from "@/stores/auth/useAuthStore";
 import { RecordGroupedByDay } from "@/types/shared";
 import useHistoryModalStore from "@/stores/modal/useHistoryModalStore";
+import { toastFailure, toastSuccess } from "@/lib/generic";
+import useHistoryStore from "@/stores/records/useHistoryStore";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export function HistorySidebar() {
-    const { isAuthenticated } = useAuthStore();
+    const { isAuthenticated, user, } = useAuthStore();
+    const { history, setHistory, removeHistory } = useHistoryStore();
 
-    const [groupedQuotes, setGroupedQuotes] = useState<RecordGroupedByDay[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+
 
     useEffect(() => {
         if (!isAuthenticated) return;
@@ -42,7 +47,7 @@ export function HistorySidebar() {
                 });
 
                 const grouped = res.data as RecordGroupedByDay[];
-                setGroupedQuotes(grouped ?? []);
+                setHistory(grouped ?? []);
             } catch (err) {
                 setError(
                     err instanceof Error ? err.message : "Failed to fetch quote history"
@@ -53,7 +58,26 @@ export function HistorySidebar() {
         };
 
         fetchQuoteHistory();
-    }, [isAuthenticated]);
+    }, [isAuthenticated, setHistory]);
+
+
+    const handleDelete = async (id: number) => {
+        if (!window.confirm("Are you sure you want to delete this quote?")) return;
+        try {
+            await apiRequest({
+                method: "DELETE",
+                url: `/quotify`,
+                data: {
+                    id: id
+                }
+            });
+            removeHistory(id);
+            toastSuccess("Record deleted");
+        } catch (err) {
+            console.error(err);
+            toastFailure("Failed to delete record");
+        }
+    };
 
     return (
         <Sidebar>
@@ -77,51 +101,102 @@ export function HistorySidebar() {
                     </div>
                 ) : !isAuthenticated ? (
                     <AuthModal />
-                ) : groupedQuotes.length === 0 ? (
+                ) : history.length === 0 ? (
                     <div className="flex items-center justify-center h-24">
                         <span className="text-muted-foreground text-sm">
                             No quotes yet.
                         </span>
                     </div>
                 ) : (
-                    <Accordion type="multiple" className="w-full space-y-2">
-                        {groupedQuotes.map((group) => (
-                            <AccordionItem
-                                key={group.date}
-                                value={group.date}
-                                className="border-b last:border-b-0"
-                            >
-                                <AccordionTrigger className="px-2 py-2 rounded hover:bg-muted/50 transition">
-                                    {format(new Date(group.date), "MMMM do, yyyy")}
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                    <div className="space-y-1">
-                                        {group.record.map((entry) => (
-                                            <Button
-                                                key={entry.id}
-                                                variant="ghost"
-                                                className="justify-start text-left text-sm w-full px-2 py-2 rounded hover:bg-accent hover:text-accent-foreground transition"
-                                                onClick={() => {
-                                                    useHistoryModalStore.getState().openModal(entry.id);
-                                                }}
-                                            >
-                                                <span className="mr-2 text-muted-foreground">🕓</span>
-                                                <span className="font-mono text-xs text-muted-foreground">
-                                                    {format(new Date(entry.dateCreated), "hh:mm a")}
+                    <>
+                        {history.map((group) => {
+                            const isOpen = openGroups[group.date] ?? false;
+                            return (
+                                <SidebarGroup key={group.date}>
+                                    <Collapsible
+                                        open={isOpen}
+                                        onOpenChange={(open) =>
+                                            setOpenGroups((prev) => ({ ...prev, [group.date]: open }))
+                                        }
+                                        className="w-full"
+                                    >
+                                        <CollapsibleTrigger asChild>
+                                            <div className="flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-muted/50 rounded transition">
+                                                <span className="text-sm font-medium">
+                                                    {format(new Date(group.date), "MMMM do, yyyy")}
                                                 </span>
-                                                <span className="text-muted-foreground">-</span>
-                                                <span className="truncate">
-                                                    {entry.quote.slice(0, 40)}...
-                                                </span>
-                                            </Button>
-                                        ))}
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
+                                                {isOpen ? (
+                                                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                                                ) : (
+                                                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                                )}
+                                            </div>
+                                        </CollapsibleTrigger>
+
+                                        <CollapsibleContent>
+                                            <SidebarMenu>
+                                                {group.record.map((entry) => (
+                                                    <SidebarMenuItem key={entry.id}>
+                                                        <SidebarMenuButton
+                                                            asChild
+                                                            onClick={() =>
+                                                                useHistoryModalStore.getState().openModal(entry.id)
+                                                            }
+                                                            className="justify-start truncate text-left"
+                                                        >
+                                                            <button>
+                                                                <Quote className="h-4 w-4 text-muted-foreground" />
+                                                                <span className="font-mono text-xs text-muted-foreground">
+                                                                    {format(new Date(entry.dateCreated), "hh:mm a")}
+                                                                </span>
+                                                                <span className="text-muted-foreground">-</span>
+                                                                <span className="truncate">{entry.quote.slice(0, 10)}...</span>
+                                                            </button>
+                                                        </SidebarMenuButton>
+                                                        <SidebarMenuAction
+                                                            onClick={() => handleDelete(entry.id)}
+                                                            title="Delete record"
+                                                        >
+                                                            <Trash className="h-4 w-4 text-destructive" />
+                                                        </SidebarMenuAction>
+                                                    </SidebarMenuItem>
+                                                ))}
+                                            </SidebarMenu>
+                                        </CollapsibleContent>
+                                    </Collapsible>
+                                </SidebarGroup>
+                            );
+                        })}
+                    </>
                 )}
             </SidebarContent>
+            {isAuthenticated && (
+                <SidebarFooter>
+                    <SidebarMenu>
+                        <SidebarMenuItem>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <SidebarMenuButton>
+                                        <User2 /> {user?.name}
+                                        <ChevronUp className="ml-auto" />
+                                    </SidebarMenuButton>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent
+                                    side="top"
+                                    className="w-[--radix-popper-anchor-width]"
+                                >
+                                    <DropdownMenuItem>
+                                        <span>Data Usage</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem variant="destructive">
+                                        <span>Delete Quotify Account</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                </SidebarFooter>
+            )}
         </Sidebar>
     );
 }

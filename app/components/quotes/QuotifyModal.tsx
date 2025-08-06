@@ -19,6 +19,8 @@ import { ModalInteractionProps, QuoteReqData } from "@/types/shared";
 import { useCallback, useEffect } from "react";
 import QuotePreview from "./QuotePreview";
 import QuoteRenderer from "./QuoteRender";
+import { AlertTriangle } from "lucide-react";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 
 export function QuotifyModal({
     interaction,
@@ -115,12 +117,17 @@ export function QuotifyModal({
             >
                 {/* --- Error State --- */}
                 {quoteError ? (
-                    <DialogHeader>
-                        <DialogTitle>Error Generating Quote</DialogTitle>
-                        <DialogDescription className="text-red-500 p-3 text-center">
-                            {quoteError.message}
-                        </DialogDescription>
-                    </DialogHeader>
+                    <>
+                        <DialogHeader>
+                            <DialogTitle>Error Generating Quote</DialogTitle>
+                        </DialogHeader>
+                        <Alert variant="destructive" className="mt-2">
+                            <AlertTriangle className="h-4 w-4" />
+                            <AlertTitle>
+                                {quoteError.message || "Something went wrong"}
+                            </AlertTitle>
+                        </Alert>
+                    </>
                 ) : isBusy ? (
                     <>
                         {/* --- Loading State --- */}
