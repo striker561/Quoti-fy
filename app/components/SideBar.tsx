@@ -23,9 +23,11 @@ import useHistoryModalStore from "@/stores/modal/useHistoryModalStore";
 import { toastFailure, toastSuccess } from "@/lib/generic";
 import useHistoryStore from "@/stores/records/useHistoryStore";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { usePolicyStore } from "@/stores/modal/usePolicyModalStore";
 
 export function HistorySidebar() {
-    const { isAuthenticated, user, } = useAuthStore();
+    const openPolicy = usePolicyStore((s) => s.open);
+    const { isAuthenticated, user, logout } = useAuthStore();
     const { history, setHistory, removeHistory } = useHistoryStore();
 
     const [loading, setLoading] = useState(false);
@@ -78,6 +80,24 @@ export function HistorySidebar() {
             toastFailure("Failed to delete record");
         }
     };
+
+    const handleAccountDelete = async () => {
+        if (!window.confirm("Do you want to delete your account ?")) return;
+        try {
+            await apiRequest({
+                method: "DELETE",
+                url: `/account`,
+                data: {
+                    id: user?.id
+                }
+            });
+            logout();
+            toastSuccess("Account deleted");
+        } catch (err) {
+            console.error(err);
+            toastFailure("Failed to delete account")
+        }
+    }
 
     return (
         <Sidebar>
@@ -186,10 +206,13 @@ export function HistorySidebar() {
                                     className="w-[--radix-popper-anchor-width]"
                                 >
                                     <DropdownMenuItem>
-                                        <span>Data Usage</span>
+                                        <span>View App Stat</span>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem variant="destructive">
-                                        <span>Delete Quotify Account</span>
+                                    <DropdownMenuItem onClick={openPolicy}>
+                                        <span>Privacy and Data Usage</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem variant="destructive" onClick={handleAccountDelete}>
+                                        <span>Delete Account</span>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
