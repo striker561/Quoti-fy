@@ -5,8 +5,8 @@ export function fitTextToBox(
 ): { lines: string[]; fontSize: number } {
     const words = text.split(" ");
 
-    const maxFontSize = 150;
-    const minFontSize = 50;
+    const maxFontSize = 20;
+    const minFontSize = 10;
     let fontSize = maxFontSize;
 
     let bestFit: { lines: string[]; fontSize: number } = { lines: [], fontSize: minFontSize };

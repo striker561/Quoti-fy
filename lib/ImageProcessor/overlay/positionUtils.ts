@@ -7,7 +7,7 @@ export function getPosition(
 ) {
     const lineHeight = lines * fontSize;
     const padding = 40;
-    const bottomLeeway = 200;
+    const bottomLeeway = 20;
 
     const positions: Record<
         string,
