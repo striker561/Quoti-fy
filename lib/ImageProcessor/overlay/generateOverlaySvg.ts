@@ -49,11 +49,15 @@ export function generateOverlaySvg({
         .quote {
           fill: ${textColor};
           font-size: ${fontSize}px;
-          font-family: Georgia, 'Palatino Linotype', serif;
-          font-weight: bold;
-          stroke: black;
-          stroke-width: 1.5px; /* Slightly thicker for better visibility */
+          font-family: 'Times New Roman', 'Liberation Serif', 'DejaVu Serif', Times, serif;
+          font-weight: 700;
+          stroke: rgba(0, 0, 0, 0.8);
+          stroke-width: 2px;
+          stroke-linejoin: round;
+          stroke-linecap: round;
           paint-order: stroke fill;
+          text-rendering: optimizeLegibility;
+          letter-spacing: 0.5px;
         }
       </style>
       ${bg}
