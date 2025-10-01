@@ -1,9 +1,9 @@
-import { pgTable, uuid, text, jsonb, timestamp, uniqueIndex, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, jsonb, timestamp, uniqueIndex, integer } from "drizzle-orm/pg-core";
 import { users } from "./auth";
 
 export const quotifyEntries = pgTable("tbl_quotify_records", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-    userId: uuid("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+    userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
     quote: text("quote").notNull(),
     imageURL: jsonb("imagesURL").notNull(),
     promptData: jsonb("promptData").notNull(),
