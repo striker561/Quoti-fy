@@ -68,14 +68,27 @@ export function generateTextOverlay({
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
 
-        return `<text x="${xPos}" y="${y}" text-anchor="${textAnchor}" fill="${textColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" font-family="Arial,Helvetica,sans-serif" font-size="${fontSize}" font-weight="bold">${escapedLine}</text>`;
+        return `<text x="${xPos}" y="${y}" text-anchor="${textAnchor}" fill="${textColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: ${fontSize}px; font-weight: bold;">${escapedLine}</text>`;
     }).join('');
 
     const backgroundRect = addBackground ?
         `<rect width="${width}" height="${overlayHeight}" fill="rgba(0,0,0,0.6)"/>` : '';
 
-    // Use the simplest possible SVG structure
-    const svg = `<svg width="${width}" height="${overlayHeight}" xmlns="http://www.w3.org/2000/svg">${backgroundRect}${textElements}</svg>`;
+    // Use the simplest possible SVG structure with system font stack
+    const svg = `<svg width="${width}" height="${overlayHeight}" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>
+                <![CDATA[
+                @font-face {
+                    font-family: 'fallback';
+                    src: local('Arial'), local('Helvetica'), local('sans-serif');
+                }
+                ]]>
+            </style>
+        </defs>
+        ${backgroundRect}
+        ${textElements}
+    </svg>`;
 
     return Buffer.from(svg);
 }
