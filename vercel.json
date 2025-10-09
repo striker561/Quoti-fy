@@ -1,11 +1,11 @@
 {
     "functions": {
         "app/api/**/*.ts": {
-            "env": {
-                "FONTCONFIG_PATH": "/usr/share/fonts",
-                "FONTCONFIG_FILE": "/etc/fonts/fonts.conf"
-            }
+            "maxDuration": 30
         }
     },
-    "buildCommand": "npm run build"
+    "env": {
+        "FONTCONFIG_PATH": "/usr/share/fonts",
+        "FONTCONFIG_FILE": "/etc/fonts/fonts.conf"
+    }
 }
