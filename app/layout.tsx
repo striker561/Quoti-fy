@@ -9,42 +9,44 @@ import { HistorySidebar } from "./components/SideBar";
 import SessionSyncer from "@/components/shared/SessionSyncer";
 
 const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+    variable: "--font-poppins",
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    display: "swap",
+    fallback: ["system-ui", "Arial", "sans-serif"],
 });
 
 export const metadata: Metadata = {
-  title:
-    process.env.APP_NAME +
-    " || Generate the right quote that fits your mood and day",
-  description: "Free and NOT-AI powered quote generator, I was bored i guess.",
+    title:
+        process.env.APP_NAME +
+        " || Generate the right quote that fits your mood and day",
+    description: "Free and NOT-AI powered quote generator, I was bored i guess.",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <SessionProvider>
-      <SessionSyncer />
-      <html lang="en" suppressHydrationWarning>
-        <body className={`${poppins.className} antialiased`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster position="top-right" containerClassName="text-[12px]" />
-            <SidebarProvider>
-              <HistorySidebar />
-              {children}
-            </SidebarProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </SessionProvider>
-  );
+    return (
+        <SessionProvider>
+            <SessionSyncer />
+            <html lang="en" suppressHydrationWarning>
+                <body className={`${poppins.className} antialiased`}>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <Toaster position="top-right" containerClassName="text-[12px]" />
+                        <SidebarProvider>
+                            <HistorySidebar />
+                            {children}
+                        </SidebarProvider>
+                    </ThemeProvider>
+                </body>
+            </html>
+        </SessionProvider>
+    );
 }
