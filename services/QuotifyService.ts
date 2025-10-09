@@ -1,7 +1,7 @@
 import sharp from "sharp";
 import { QuotifyRequest } from "@/types/requests";
 import { analyzeImageArea } from "@/lib/ImageProcessor/overlay/analyzeImageArea";
-import { generateOverlaySvg } from "@/lib/ImageProcessor/overlay/generateOverlaySvg";
+import { generateTextOverlay } from "@/lib/ImageProcessor/overlay/generateTextOverlay";
 import { applyFilter } from "@/lib/ImageProcessor/filters";
 
 
@@ -27,19 +27,24 @@ export async function processQuotifyRequest(data: QuotifyRequest): Promise<strin
         h: height! / 2
     });
 
-    const overlaySvgBuffer = generateOverlaySvg({
+    const textOverlayBuffer = generateTextOverlay({
         text: data.quote,
-        width,
-        height,
+        width: width!,
+        height: height!,
         position: "bottom",
         addBackground: false,
         textColor: colorAnalysis.color
     });
 
+    // Calculate positioning for the overlay
+    const textHeight = Math.ceil(data.quote.length / 50) * 60 + 40;
+    const overlayTop = height! - textHeight;
+
     const finalImageBuffer = await applyFilter(data.filter, imagePipeline)
         .composite([{
-            input: overlaySvgBuffer,
-            tile: true
+            input: textOverlayBuffer,
+            top: Math.max(0, overlayTop),
+            left: 0
         }])
         .webp({ quality: 80 })
         .toBuffer();
